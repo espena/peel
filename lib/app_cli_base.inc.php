@@ -5,6 +5,9 @@
     public function __construct( $base ) {
       $this->mBase = $base;
     }
+    public function getConfig() {
+      return $this->mBase->getConfig();
+    }
     public function run() {
       echo( "This is the CLI frontend speaking\n" );
       if( $this->mBase ) {
