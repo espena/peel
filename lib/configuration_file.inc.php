@@ -3,7 +3,7 @@
   class ConfigurationFile {
     private static $mConfigData;
     public static function parse() {
-      if( !$this->mConfigData ) {
+      if( !self::$mConfigData ) {
         $params = Factory::getParameters();
         $file = isset( $params[ 'conf' ] ) ? $params[ 'conf' ] : DIR_CONF . '/peel.conf';
         $this->mConfigData = parse_ini_file( $file, true, INI_SCANNER_NORMAL );
