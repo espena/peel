@@ -3,6 +3,7 @@
   require_once( DIR_LIB . '/app_cli_base.inc.php' );
   require_once( DIR_LIB . '/app_web_base.inc.php' );
   require_once( DIR_LIB . '/app_web_frontend.inc.php' );
+  require_once( DIR_LIB . '/confifuration_file.inc.php' );
   class Factory {
     private static $mConfig;
     public static function getApplication() {
@@ -18,7 +19,7 @@
     }
     public static function getConfig() {
       if( !$this->mConfig ) {
-        $this->mConfig = array();
+        $this->mConfig = ConfigurationFile::parse();
       }
       return $this->mConfig;
     }
