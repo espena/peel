@@ -4,6 +4,7 @@
   require_once( DIR_LIB . '/app_web_base.inc.php' );
   require_once( DIR_LIB . '/app_web_frontend.inc.php' );
   class Factory {
+    private static $mConfig;
     public static function getApplication() {
       $app = new AppBase();
       if( PHP_SAPI == 'cli' ) {
@@ -14,6 +15,12 @@
         $app = new AppWebFrontend( $app );
       }
       return $app;
+    }
+    public static function getConfig() {
+      if( !$this->mConfig ) {
+        $this->mConfig = array();
+      }
+      return $this->mConfig;
     }
     public static function releaseApplication( &$app ) {
       if( $app ) {
