@@ -8,20 +8,14 @@
       return $this->mBase->getConfig();
     }
     public function run() {
-      if( $this->mBase ) {
-        $this->mBase->run();
-      }
+      $this->mBase->run();
       echo( 'This is the web frontend speaking...' );
     }
     public function terminate() {
-      if( $this->mBase ) {
-        $this->mBase->terminate();
-      }
+      $this->mBase->terminate();
     }
     public function tpl( $idt ) {
-      if( $this->mBase ) {
-        $this->mBase->tpl( $idt );
-      }
+      $this->mBase->tpl( $idt );
     }
   }
 ?>

@@ -10,14 +10,10 @@
     }
     public function run() {
       echo( "This is the CLI frontend speaking\n" );
-      if( $this->mBase ) {
-        $this->mBase->run();
-      }
+      $this->mBase->run();
     }
     public function terminate() {
-      if( $this->mBase ) {
-        $this->mBase->terminate();
-      }
+      $this->mBase->terminate();
     }
   }
 ?>

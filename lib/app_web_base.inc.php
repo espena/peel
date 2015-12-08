@@ -9,15 +9,11 @@
       return $this->mBase->getConfig();
     }
     public function run() {
-      if( $this->mBase ) {
-        $this->mBase->run();
-      }
+      $this->mBase->run();
       $this->tpl( 'main' );
     }
     public function terminate() {
-      if( $this->mBase ) {
-        $this->mBase->terminate();
-      }
+      $this->mBase->terminate();
     }
     public function tpl( $idt ) {
       
