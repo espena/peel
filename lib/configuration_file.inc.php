@@ -1,10 +1,14 @@
 <?php
   require_once( DIR_LIB . '/factory.inc.php' );
   class ConfigurationFile {
+    private static $mConfigData;
     public static function parse() {
-      $params = Factory::getParameters();
-      $file = isset( $params[ 'conf' ] ) ? $params[ 'conf' ] : DIR_CONF . '/peel.conf';
-      return parse_ini_file( $file, true, INI_SCANNER_NORMAL );
+      if( !$this->mConfigData ) {
+        $params = Factory::getParameters();
+        $file = isset( $params[ 'conf' ] ) ? $params[ 'conf' ] : DIR_CONF . '/peel.conf';
+        $this->mConfigData = parse_ini_file( $file, true, INI_SCANNER_NORMAL );
+      }
+      return $this->mConfigData;
     }
   }
 ?>
