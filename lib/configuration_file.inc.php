@@ -6,9 +6,9 @@
       if( !self::$mConfigData ) {
         $params = Factory::getParameters();
         $file = isset( $params[ 'conf' ] ) ? $params[ 'conf' ] : DIR_CONF . '/peel.conf';
-        $this->mConfigData = parse_ini_file( $file, true, INI_SCANNER_NORMAL );
+        self::$mConfigData = parse_ini_file( $file, true, INI_SCANNER_NORMAL );
       }
-      return $this->mConfigData;
+      return self::$mConfigData;
     }
   }
 ?>
