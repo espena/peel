@@ -22,7 +22,7 @@
       if( !self::$mConfig ) {
         self::$mConfig = ConfigurationFile::parse();
       }
-      return $this->mConfig;
+      return self::$mConfig;
     }
     public static function getParameters() {
       if( !self::$mParams ) {
