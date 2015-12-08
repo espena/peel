@@ -20,7 +20,7 @@
     }
     public static function getConfig() {
       if( !self::$mConfig ) {
-        $this->mConfig = ConfigurationFile::parse();
+        self::$mConfig = ConfigurationFile::parse();
       }
       return $this->mConfig;
     }
