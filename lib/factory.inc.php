@@ -4,8 +4,10 @@
   require_once( DIR_LIB . '/app_web_base.inc.php' );
   require_once( DIR_LIB . '/app_web_frontend.inc.php' );
   require_once( DIR_LIB . '/configuration_file.inc.php' );
+  require_once( DIR_LIB . '/log_file.inc.php' );
   class Factory {
     private static $mConfig;
+    private static $mLogger;
     private static $mParams;
     public static function getApplication() {
       $app = new AppBase();
@@ -23,6 +25,12 @@
         self::$mConfig = ConfigurationFile::parse();
       }
       return self::$mConfig;
+    }
+    public static function getLogger() {
+      if( !self::$mLogger ) {
+        self::$mLogger = new LogFile();
+      }
+      return self::$mLogger;
     }
     public static function getParameters() {
       if( !self::$mParams ) {
