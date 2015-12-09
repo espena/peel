@@ -32,7 +32,6 @@
         $c[ 'config_file_path' ] = $confFile;
         array_push( self::$mConfigData, $c );
       }
-      print_r( self::$mConfigData );
     }
   }
 ?>
