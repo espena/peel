@@ -6,7 +6,7 @@
       $c = Factory::getConfig();
       $this->mLogFile = isset( $c[ 'logging' ][ 'error_log' ] )
                       ? $c[ 'logging' ][ 'error_log' ]
-                      : '/var/log/peeler.log';
+                      : '/var/log/peel.log';
     }
     private function getPrefix( $level ) {
       $now = date("Y-m-d H:i:s");
