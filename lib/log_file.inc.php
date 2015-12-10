@@ -4,8 +4,8 @@
   class LogFile implements ILogger {
     public function __construct() {
       $c = Factory::getConfig();
-      $this->mLogFile = isset( $c[ 'logging' ][ 'error_log' ] )
-                      ? $c[ 'logging' ][ 'error_log' ]
+      $this->mLogFile = isset( $c[ 'logging' ][ 'log_file' ] )
+                      ? $c[ 'logging' ][ 'log_file' ]
                       : '/var/log/peel.log';
     }
     private function getPrefix( $level ) {
