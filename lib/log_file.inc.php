@@ -10,6 +10,9 @@
       $this->mLogFile = isset( $this->mConfig[ 'logging' ][ 'log_file' ] )
                       ? $this->mConfig[ 'logging' ][ 'log_file' ]
                       : DIR_BASE . '/log/peel.log';
+      if( substr( $this->mLogFile, 0, 1 ) !== '/' ) {
+        $this->mLogFile = DIR_BASE . '/' . $this->mLogFile;
+      }
       $logDir = dirname( $this->mLogFile );
       if( !file_exists( $logDir ) ) {
         mkdir( $logDir, 0777, true );
