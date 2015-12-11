@@ -9,7 +9,7 @@
       $this->mConfig = Factory::getConfig();
       $this->mLogFile = isset( $this->mConfig[ 'logging' ][ 'log_file' ] )
                       ? $this->mConfig[ 'logging' ][ 'log_file' ]
-                      : '/var/log/peel.log';
+                      : DIR_BASE . '/log/peel.log';
       $this->mMaxSize = $this->mConfig[ 'logging' ][ 'max_size' ];
       $this->mMaxSize = str_replace( ' ', '', $this->mMaxSize );
       if( preg_match( '/^[0-9]+[0-9KMG]$/i', $this->mMaxSize ) !== false ) {
