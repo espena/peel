@@ -29,14 +29,14 @@
       $now = date("Y-m-d H:i:s");
       return sprintf( "%s - %s:", $now, str_pad( $level, 10, ' ', STR_PAD_RIGHT ) );
     }
-    public function message( $str ) {
-      $this->write( $this->getPrefix( 'MESSAGE' ), $str );
+    public function message( $fmt /* printf-style args list */ ) {
+      $this->write( $this->getPrefix( 'MESSAGE' ), func_get_args() );
     }
-    public function warning( $str ) {
-      $this->write( $this->getPrefix( 'WARNING' ), $str );
+    public function warning( $fmt /* printf-style args list */ ) {
+      $this->write( $this->getPrefix( 'WARNING' ), func_get_args() );
     }
-    public function error( $str ) {
-      $this->write( $this->getPrefix( 'ERROR' ), $str );
+    public function error( $fmt /* printf-style args list */ ) {
+      $this->write( $this->getPrefix( 'ERROR' ), func_get_args() );
     }
     private function purge() {
       $size = filesize( $this->mLogFile );
@@ -57,7 +57,8 @@
         fclose( $fh );
       }
     }
-    private function write( $prefix, $str ) {
+    private function write( $prefix, $args ) {
+      $str = call_user_func_array( 'sprintf', $args );
       file_put_contents( $this->mLogFile, sprintf( "%s %s\n", $prefix, $str ), FILE_APPEND );
       $this->purge();
     }
