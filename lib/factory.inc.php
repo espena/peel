@@ -3,6 +3,7 @@
   require_once( DIR_LIB . '/app_cli_base.inc.php' );
   require_once( DIR_LIB . '/app_web_base.inc.php' );
   require_once( DIR_LIB . '/app_web_frontend.inc.php' );
+  require_once( DIR_LIB . '/app_enabler.inc.php' );
   require_once( DIR_LIB . '/configuration_file.inc.php' );
   require_once( DIR_LIB . '/log_file.inc.php' );
   class Factory {
@@ -13,6 +14,10 @@
       $app = new AppBase();
       if( PHP_SAPI == 'cli' ) {
         $app = new AppCliBase( $app );
+        $p = self::getParameters();
+        if( isset( $p[ 'e' ] ) || isset( $p[ 'enable' ] ) || isset( $p[ 'd' ] ) || isset( $p[ 'disable' ] ) ) {
+          $app = new AppEnabler( $app );
+        }
       }
       else {
         $app = new AppWebBase( $app );
@@ -34,7 +39,7 @@
     }
     public static function getParameters() {
       if( !self::$mParams ) {
-        self::$mParams = getopt( "c", array( 'conf' ) ) or array();
+        self::$mParams = getopt( "c:e:d:", array( 'conf:', 'enable:', 'disable:' ) ) or array();
       }
       return self::$mParams;
     }
