@@ -58,7 +58,7 @@
       }
     }
     private function write( $prefix, $str ) {
-      file_put_contents( $this->mLogFile, sprintf( "%s %s\n", $prefix, $str ) );
+      file_put_contents( $this->mLogFile, sprintf( "%s %s\n", $prefix, $str ), FILE_APPEND );
       $this->purge();
     }
   }
