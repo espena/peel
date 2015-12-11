@@ -10,6 +10,10 @@
       $this->mLogFile = isset( $this->mConfig[ 'logging' ][ 'log_file' ] )
                       ? $this->mConfig[ 'logging' ][ 'log_file' ]
                       : DIR_BASE . '/log/peel.log';
+      $logDir = dirname( $this->mLogFile );
+      if( !file_exists( $logDir ) ) {
+        mkdir( $logDir, 0777, true );
+      }
       $this->mMaxSize = $this->mConfig[ 'logging' ][ 'max_size' ];
       $this->mMaxSize = str_replace( ' ', '', $this->mMaxSize );
       if( preg_match( '/^[0-9]+[0-9KMG]$/i', $this->mMaxSize ) !== false ) {
