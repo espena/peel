@@ -30,7 +30,7 @@
       foreach( $confEnabled as $confFile ) {
         $c = parse_ini_file( $confFile, true, INI_SCANNER_NORMAL );
         $c[ 'config_file_path' ] = $confFile;
-        array_push( self::$mConfigData[ 'peelers' ], $c );
+        self::$mConfigData[ 'peelers' ][ strtolower( basename( $confFile, '.conf' ) ) ] = $c;
       }
     }
   }
