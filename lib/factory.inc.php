@@ -5,7 +5,7 @@
   require_once( DIR_LIB . '/app_web_frontend.inc.php' );
   require_once( DIR_LIB . '/app_enabler.inc.php' );
   require_once( DIR_LIB . '/app_peel_engine.inc.php' );
-  require_once( DIR_LIB . '/app_peeler__basic.inc.php' );
+  require_once( DIR_LIB . '/peeler__basic.inc.php' );
   require_once( DIR_LIB . '/configuration_file.inc.php' );
   require_once( DIR_LIB . '/log_file.inc.php' );
   class Factory {
