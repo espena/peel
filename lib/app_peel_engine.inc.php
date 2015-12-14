@@ -12,10 +12,11 @@
       return $this->mBase->getConfig();
     }
     public function run() {
-      return $this->mBase->run();
+      $this->mBase->run();
       $c = $this->getConfig();
       foreach( $c[ 'peelers' ] as $name => $peelerConf ) {
         $this->mPeelers[ $name ] = Factory::createPeeler( $peelerConf );
+        $this->mPeelers[ $name ]->start();
       }
     }
     public function terminate() {
