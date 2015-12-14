@@ -4,6 +4,7 @@
   require_once( DIR_LIB . '/app_web_base.inc.php' );
   require_once( DIR_LIB . '/app_web_frontend.inc.php' );
   require_once( DIR_LIB . '/app_enabler.inc.php' );
+  require_once( DIR_LIB . '/app_peel_enging.inc.php' );
   require_once( DIR_LIB . '/configuration_file.inc.php' );
   require_once( DIR_LIB . '/log_file.inc.php' );
   class Factory {
@@ -17,6 +18,9 @@
         $p = self::getParameters();
         if( isset( $p[ 'e' ] ) || isset( $p[ 'enable' ] ) || isset( $p[ 'd' ] ) || isset( $p[ 'disable' ] ) ) {
           $app = new AppEnabler( $app );
+        }
+        else {
+          $app = new AppPeelEngine( $app );
         }
       }
       else {
