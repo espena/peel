@@ -6,6 +6,7 @@
   require_once( DIR_LIB . '/app_enabler.inc.php' );
   require_once( DIR_LIB . '/app_peel_engine.inc.php' );
   require_once( DIR_LIB . '/peeler__basic.inc.php' );
+  require_once( DIR_LIB . '/scraper.inc.php' );
   require_once( DIR_LIB . '/configuration_file.inc.php' );
   require_once( DIR_LIB . '/log_file.inc.php' );
   class Factory {
@@ -15,6 +16,9 @@
     public static function createPeeler( $conf ) {
       $peeler = new Peeler_basic( $conf );
       return $peeler;
+    }
+    public static function createScraper() {
+      return new Scraper();
     }
     public static function getApplication() {
       $app = new AppBase();
