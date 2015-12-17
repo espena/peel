@@ -22,7 +22,7 @@
   * Implements interface IClientApplication, providing basic functionality
   * for command-line (client) invocations.
   *
-  * /IApplication classes are instantiated in /Factory.
+  * /IClientApplication classes are instantiated in /Factory.
   *
   * @category   peel
   * @package    PEEL
