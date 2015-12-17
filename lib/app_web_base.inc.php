@@ -2,7 +2,7 @@
  /**
   * PEEL Document Downloader engine.
   *
-  * Web application base class..
+  * Web application base class.
   *
   * PHP version > 5.5
   *
