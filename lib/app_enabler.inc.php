@@ -1,6 +1,6 @@
 <?php
  /**
-  * PEEL Document Downloader engine
+  * PEEL Document Downloader engine.
   *
   * Class for handling activation and deactivation of peelers.
   *
@@ -18,10 +18,12 @@
   require_once( DIR_LIB . '/factory.inc.php' );
 
  /**
-  * Peeler enabler/disabler class
+  * Peeler enabler/disabler class.
   *
   * Implements interface IApplication, implements administration of
   * selected peelers. Invoked with the -e or -d commsnd-line arguments.
+  *
+  * /IApplication classes are instantiated in /Factory.
   *
   * @category   peel
   * @package    PEEL
@@ -31,8 +33,26 @@
   * @link       https://github.com/espena/peel
   */
   class AppEnabler implements IApplication {
+
+   /**
+    * The decorated (base) application instance.
+     *
+    * @var IApplication $mBase
+    */
     private $mBase;
+
+   /**
+    * Direcotry where config files for available peelers are located.
+    *
+    * @var string $mPathPeelersAvailable
+    */
     private $mPathPeelersAvailable;
+
+   /**
+    * Direcotry where config files for enabled peelers are located.
+    *
+    * @var string $mPathPeelersEnabled
+    */
     private $mPathPeelersEnabled;
 
    /**
@@ -46,7 +66,7 @@
     }
 
    /**
-    * Disable activated peeler
+    * Disable activated peeler.
     *
     * Removes the configuration file for the selected peeler from the
     * peelers-enabled directory.
@@ -68,7 +88,7 @@
     }
 
    /**
-    * Enable available peeler
+    * Enable available peeler.
     *
     * Copies the configuration file for the selected peeler from the
     * peelers-available directory to the peelers-enabled directory.
@@ -91,7 +111,7 @@
     }
 
    /**
-    * Get configuration array
+    * Get configuration array.
     *
     * Returns the application configuration, including the settings for
     * individually enabled peelers.
@@ -103,7 +123,7 @@
     }
 
    /**
-    * Run application
+    * Run application.
     *
     * Starts application execution.
     *
@@ -122,7 +142,7 @@
     }
 
    /**
-    * Resolve path to peeler configuration file directory
+    * Resolve path to peeler configuration file directory.
     *
     * Returns the correct path to the selected configuration directory. Paths that are not
     * absolute are made relative to the current configuration directory.
@@ -154,7 +174,7 @@
     }
 
    /**
-    * Terminate application
+    * Terminate application.
     *
     * Stops application execution.
     *

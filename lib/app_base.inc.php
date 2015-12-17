@@ -1,8 +1,8 @@
 <?php
  /**
-  * PEEL Document Downloader engine
+  * PEEL Document Downloader engine.
   *
-  * Application base class
+  * Application base class.
   *
   * PHP version > 5.5
   *
@@ -23,6 +23,8 @@
   * Implements interface IApplication, providing basic functionality common
   * to both web and command-line invocations.
   *
+  * /IApplication classes are instantiated in /Factory.
+  *
   * @category   peel
   * @package    PEEL
   * @author     Espen Andersen <post@espenandersen.no>
@@ -33,7 +35,7 @@
   class AppBase implements IApplication {
 
    /**
-    * Get configuration array
+    * Get configuration array.
     *
     * Returns the application configuration, including the settings for
     * individually enabled peelers.
@@ -45,7 +47,7 @@
     }
 
    /**
-    * Run application
+    * Run application.
     *
     * Starts application execution.
     *
@@ -56,7 +58,7 @@
     }
 
    /**
-    * Terminate application
+    * Terminate application.
     *
     * Stops application execution.
     *

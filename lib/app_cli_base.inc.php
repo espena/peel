@@ -1,8 +1,8 @@
 <?php
  /**
-  * PEEL Document Downloader engine
+  * PEEL Document Downloader engine.
   *
-  * Application base class for command-line invocations
+  * Application base class for command-line invocations.
   *
   * PHP version > 5.5
   *
@@ -22,6 +22,8 @@
   * Implements interface IClientApplication, providing basic functionality
   * for command-line (client) invocations.
   *
+  * /IApplication classes are instantiated in /Factory.
+  *
   * @category   peel
   * @package    PEEL
   * @author     Espen Andersen <post@espenandersen.no>
@@ -30,6 +32,7 @@
   * @link       https://github.com/espena/peel
   */
   class AppCliBase implements IClientApplication {
+
    /**
     * The decorated (base) application instance.
     *
@@ -38,7 +41,7 @@
     private $mBase;
 
    /**
-    * Constructor
+    * Constructor.
     *
     * @param IApplication $base The decorated (base) application instance.
     * @return void
@@ -48,7 +51,7 @@
     }
 
    /**
-    * Get configuration array
+    * Get configuration array.
     *
     * Returns the application configuration, including the settings for
     * individually enabled peelers.
@@ -60,7 +63,7 @@
     }
 
    /**
-    * Run application
+    * Run application.
     *
     * Starts application execution.
     *
@@ -72,7 +75,7 @@
     }
 
    /**
-    * Terminate application
+    * Terminate application.
     *
     * Stops application execution.
     *
