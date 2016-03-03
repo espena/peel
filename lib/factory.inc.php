@@ -14,8 +14,7 @@
     private static $mLogger;
     private static $mParams;
     public static function createPeeler( $conf ) {
-      $peeler = new Peeler_basic( $conf );
-      return $peeler;
+      return new Peeler_basic( $conf );
     }
     public static function createScraper() {
       return new Scraper();
