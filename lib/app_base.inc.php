@@ -54,7 +54,9 @@
     * @return void
     */
     public function run() {
-
+      $c = Factory::getConfig();
+      $z = isset( $c[ 'system' ][ 'timezone' ] ) ? $c[ 'system' ][ 'timezone' ] : 'Europe/London';
+      date_default_timezone_set( $z );
     }
 
    /**
