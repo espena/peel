@@ -101,7 +101,7 @@
       $source = sprintf( '%s/%s.conf', $this->mPathPeelersAvailable, $peelerToEnable );
       $destin = sprintf( '%s/%s.conf', $this->mPathPeelersEnabled, $peelerToEnable );
       if( file_exists( $source ) ) {
-        if( copy( $source, $destin ) ) {
+        if( symlink( $source, $destin ) ) {
           Factory::getLogger()->message( "Peeler %s successfully enabled", $peelerToEnable );
         }
         else {
@@ -170,7 +170,7 @@
       else {
         $path = $c[ 'peeler_conf' ][ $dirTag ];
       }
-      return $path;
+      return realpath( $path );
     }
 
    /**
