@@ -74,7 +74,9 @@
    /**
     * Run application.
     *
-    * Starts application execution.
+    * Starts application execution. Iterates through each enabled peeler,
+    * creates the peeler object, passing in configuration data for
+    * that peeler and runs it.
     *
     * @return void
     */
