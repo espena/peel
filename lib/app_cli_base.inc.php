@@ -70,7 +70,6 @@
     * @return void
     */
     public function run() {
-      echo( "This is the CLI frontend speaking\n" );
       $this->mBase->run();
     }
 
