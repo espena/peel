@@ -86,6 +86,7 @@
       foreach( $c[ 'peelers' ] as $name => $peelerConf ) {
         $this->mPeelers[ $name ] = Factory::createPeeler( $peelerConf );
         $this->mPeelers[ $name ]->start();
+        print_r( $this->mPeelers[ $name ]->getData() );
       }
     }
 
