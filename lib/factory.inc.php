@@ -1,4 +1,19 @@
 <?php
+ /**
+  * Peeler factory.
+  *
+  * Creates peelers and various other objects.
+  *
+  * PHP version > 5.5
+  *
+  * @category   peel
+  * @package    PEEL
+  * @author     Espen Andersen <post@espenandersen.no>
+  * @copyright  2016 Espen Andersen
+  * @license    GNU General Public License, version 3
+  * @link       https://github.com/espena/peel
+  */
+
   require_once( DIR_LIB . '/app_base.inc.php' );
   require_once( DIR_LIB . '/app_cli_base.inc.php' );
   require_once( DIR_LIB . '/app_web_base.inc.php' );
@@ -6,15 +21,21 @@
   require_once( DIR_LIB . '/app_enabler.inc.php' );
   require_once( DIR_LIB . '/app_peel_engine.inc.php' );
   require_once( DIR_LIB . '/peeler__basic.inc.php' );
+  require_once( DIR_LIB . '/peeler__in_href.inc.php' );
   require_once( DIR_LIB . '/scraper.inc.php' );
   require_once( DIR_LIB . '/configuration_file.inc.php' );
   require_once( DIR_LIB . '/log_file.inc.php' );
+
   class Factory {
     private static $mConfig;
     private static $mLogger;
     private static $mParams;
     public static function createPeeler( $conf ) {
-      return new Peeler_basic( $conf );
+      $peeler = new Peeler_basic( $conf );
+      if( !empty( $conf[ 'peeler' ][ 'in_href' ] ) ) {
+        $peeler = new Peeler_inHref( $peeler );
+      }
+      return $peeler;
     }
     public static function createScraper() {
       return new Scraper();
