@@ -67,6 +67,7 @@
     */
     public function start() {
       $this->mScraper->get( $this->mConfig[ 'peeler' ][ 'url_start_page' ] );
+      $this->mRawData[ 'url_source' ] = $this->mConfig[ 'peeler' ][ 'url_start_page' ];
       $this->mRawData[ 'start_page' ] = $this->mScraper->getResponseData();
     }
 
@@ -85,6 +86,28 @@
     */
     public function getConfig() {
       return $this->mConfig;
+    }
+
+   /**
+    * Compile path and name for destination file.
+    * @param string $dir Path to destination directory.
+    * @param string $url URL to source file.
+    * @return string The destination file name suggestion.
+    */
+    public function resolveDestinationPath( $dir, $url ) {
+      $tit = basename( $url );
+      $pathComponents = pathinfo( "$dir/$tit" );
+      $candidatePath = sprintf( "%s/%s", $pathComponents[ 'dirname' ], $pathComponents[ 'basename' ] );
+      $sequence = 0;
+      while( file_exists( $candidatePath ) ) {
+        $candidatePath =
+          sprintf( "%s/%s_%03d.%s",
+                   $pathComponents[ 'dirname' ],
+                   $pathComponents[ 'filename' ],
+                   ++$sequence,
+                   $pathComponents[ 'extension' ] );
+      }
+      return $candidatePath;
     }
   }
 ?>
