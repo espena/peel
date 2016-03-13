@@ -33,6 +33,9 @@
       curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
       curl_setopt( $ch, CURLOPT_CONNECTTIMEOUT, $ct );
       curl_setopt( $ch, CURLOPT_TIMEOUT, $rt );
+      curl_setopt( $ch, CURLOPT_HEADER, true );
+      curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, true );
+      curl_setopt( $ch, CURLOPT_MAXREDIRS, 10 );
       return $ch;
     }
   }
