@@ -22,6 +22,7 @@
   require_once( DIR_LIB . '/app_peel_engine.inc.php' );
   require_once( DIR_LIB . '/peeler__basic.inc.php' );
   require_once( DIR_LIB . '/peeler__in_href.inc.php' );
+  require_once( DIR_LIB . '/peeler__download_to.inc.php' );
   require_once( DIR_LIB . '/scraper.inc.php' );
   require_once( DIR_LIB . '/configuration_file.inc.php' );
   require_once( DIR_LIB . '/log_file.inc.php' );
@@ -34,6 +35,9 @@
       $peeler = new Peeler_basic( $conf );
       if( !empty( $conf[ 'peeler' ][ 'in_href' ] ) ) {
         $peeler = new Peeler_inHref( $peeler );
+      }
+      if( !empty( $conf[ 'peeler' ][ 'download_to' ] ) ) {
+        $peeler = new Peeler_downloadTo( $peeler );
       }
       return $peeler;
     }
