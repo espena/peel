@@ -28,5 +28,10 @@
     * Retrieve peeler configuration.
     */
     public function getConfig();
+
+   /**
+    * Compile path and name for destination file.
+    */
+    function resolveDestinationPath( $dir, $url );
   }
 ?>
