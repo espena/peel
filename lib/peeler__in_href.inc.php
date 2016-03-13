@@ -1,6 +1,7 @@
 <?php
   require_once( DIR_LIB . '/i_peeler.inc.php' );
   require_once( DIR_LIB . '/factory.inc.php' );
+  require_once( DIR_LIB . '/utils.inc.php' );
   class Peeler_inHref implements IPeeler {
     private $mPeeler;
     private $mData;
@@ -12,8 +13,9 @@
       $this->mPeeler->start();
       $data = $this->mPeeler->getData();
       if( preg_match_all( '/href=["\']([^"\']+\.pdf)["\']/', $data, $matches, PREG_SET_ORDER ) ) {
+        $base = $this->mPeeler->getData( 'url_source' );
         foreach( $matches as $m ) {
-          $this->mData[] = $m[ 1 ];
+          $this->mData[] = Utils::rel2abs( $m[ 1 ], $base );
         }
       }
     }
@@ -22,6 +24,9 @@
     }
     public function getConfig() {
       return $this->mPeeler->getConfig();
+    }
+    public function resolveDestinationPath( $dir, $url ) {
+      return $this->mPeeler->resolveDestinationPath( $dir, $url );
     }
   }
 ?>
