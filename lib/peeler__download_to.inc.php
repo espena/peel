@@ -11,10 +11,9 @@
     }
     public function start() {
       $this->mPeeler->start();
-      $data = $this->mPeeler->getData();
       $log = Factory::getLogger();
       if( $dir = $this->getDestinationDir() ) {
-        $this->download( $data, $dir );
+        $this->download( $dir );
       }
     }
     public function getData( $key = '' ) {
@@ -23,15 +22,17 @@
     public function getConfig() {
       return $this->mPeeler->getConfig();
     }
-    private function download( $urlList, $dir ) {
+    private function download( $dir ) {
       $log = Factory::getLogger();
+      $data = $this->mPeeler->getData();
       $scraper = Factory::createScraper();
-      foreach( $urlList as $url ) {
+      foreach( $data as $sourceInfo ) {
+        $url = $sourceInfo[ 'url' ];
         $log->message( "Downloading %s", basename( $url ) );
         $scraper->get( $url );
         $res = $scraper->getResponseCode();
         if( 200 == $res ) {
-          $dest = $this->resolveDestinationPath( $dir, $url );
+          $dest = $this->resolveDestinationPath( $dir, $sourceInfo );
           $log->message( "Success! Writing %s", $dest );
           file_put_contents( $dest, $scraper->getResponseData() );
         }
@@ -55,8 +56,8 @@
       }
       return $dir;
     }
-    public function resolveDestinationPath( $dir, $url ) {
-      return $this->mPeeler->resolveDestinationPath( $dir, $url );
+    public function resolveDestinationPath( $dir, $sourceInfo ) {
+      return $this->mPeeler->resolveDestinationPath( $dir, $sourceInfo );
     }
   }
 ?>

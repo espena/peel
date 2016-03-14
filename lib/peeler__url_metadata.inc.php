@@ -2,7 +2,7 @@
   require_once( DIR_LIB . '/i_peeler.inc.php' );
   require_once( DIR_LIB . '/factory.inc.php' );
   require_once( DIR_LIB . '/utils.inc.php' );
-  class Peeler_inHref implements IPeeler {
+  class Peeler_urlMetadata implements IPeeler {
     private $mPeeler;
     private $mData;
     public function __construct( $peeler ) {
@@ -11,11 +11,15 @@
     }
     public function start() {
       $this->mPeeler->start();
-      $data = $this->mPeeler->getData();
-      if( preg_match_all( '/href=["\']([^"\']+\.pdf)["\']/', $data, $matches, PREG_SET_ORDER ) ) {
-        $base = $this->mPeeler->getData( 'url_source' );
-        foreach( $matches as $m ) {
-          $this->mData[] = array( 'url' => Utils::rel2abs( $m[ 1 ], $base ) );
+      $this->mData = $this->mPeeler->getData();
+      $c = $this->getConfig();
+      foreach( $this->mData as &$sourceInfo ) {
+        if( preg_match( '/' . $c[ 'peeler' ][ 'url_metadata' ] . '/', $sourceInfo[ 'url' ], $m ) == 1 ) {
+          $sourceInfo[ 'metadata' ] = Utils::purgeNumericSubscripts( $m );
+        }
+        else {
+          $log = Factory::getLogger();
+          $log->error( "The URL did not match 'url_metadata' pattern (%s)", $url );
         }
       }
     }
@@ -26,7 +30,7 @@
       return $this->mPeeler->getConfig();
     }
     public function resolveDestinationPath( $dir, $sourceInfo ) {
-      return $this->mPeeler->resolveDestinationPath( $dir, $sourceInfo );
+      return $this->mPeeler->resolveDestinationPath( $dir, $sourceInfo[ 'url' ] );
     }
   }
 ?>
