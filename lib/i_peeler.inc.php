@@ -31,7 +31,11 @@
 
    /**
     * Compile path and name for destination file.
+    * @param string $dir Path to destination directory.
+    * @param array $sourceInfo Associative array with information
+    *        about the source file.
+    * @return string Path and name for the destination file.
     */
-    function resolveDestinationPath( $dir, $url );
+    function resolveDestinationPath( $dir, $sourceInfo );
   }
 ?>
