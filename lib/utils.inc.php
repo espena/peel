@@ -23,6 +23,44 @@
   class Utils {  
 
    /**
+    * Asserts that given file path is non-existent
+    * Appends a sequence nuber to the file title - before the extension - if
+    * the file already exists on the system.
+    *
+    * @param string $path The path to be tested.
+    * @return string The new path, possibly modified so it is unique.
+    */
+    public static function makeUniquePath( $path ) {
+      $pathComponents = pathinfo( $path );
+      $candidatePath = sprintf( "%s/%s", $pathComponents[ 'dirname' ], $pathComponents[ 'basename' ] );
+      $sequence = 0;
+      while( file_exists( $candidatePath ) ) {
+        $candidatePath =
+          sprintf( "%s/%s_%03d.%s",
+                   $pathComponents[ 'dirname' ],
+                   $pathComponents[ 'filename' ],
+                   ++$sequence,
+                   $pathComponents[ 'extension' ] );
+      }
+      return $candidatePath;
+    }
+
+   /**
+    * Remove numerical keys from array
+    *
+    * @param array $arr The array to be purged.
+    * @return array The new array without numerical keys.
+    */
+    public static function purgeNumericSubscripts( $arr ) {
+      foreach( $arr as $k => $v ) {
+        if( is_int( $k ) ) {
+          unset( $arr[ $k ] );
+        }
+      }
+      return $arr;
+    }
+
+   /**
     * Transforms a relative URL to fully qualifying URL.
     *
     * @param string $rel The relative URL to be transformed.
@@ -30,7 +68,7 @@
     *
     * @return string The fully qualifying URL, including the transfer protocol.
     */
-    static function rel2abs( $rel, $base )
+    public static function rel2abs( $rel, $base )
     {
         /* return if already absolute URL */
         if ( parse_url( $rel, PHP_URL_SCHEME ) != '' || substr( $rel, 0, 2 ) == '//' ) return $rel;
