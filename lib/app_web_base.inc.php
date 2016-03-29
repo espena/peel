@@ -94,7 +94,10 @@
     * @return void
     */
     public function tpl( $idt ) {
-      
+      $tplFile = sprintf( '%s/%s.tpl', DIR_TPL, $idt );
+      if( file_exists( $tplFile ) ) {
+        readfile( $tplFile );
+      }
     }
   }
 ?>
