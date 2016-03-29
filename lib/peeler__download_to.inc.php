@@ -33,7 +33,7 @@
         $res = $scraper->getResponseCode();
         if( 200 == $res ) {
           $dest = $this->resolveDestinationPath( $dir, $sourceInfo );
-          $log->message( "Success! Writing %s", $dest );
+          $log->message( "Writing %s", $dest );
           file_put_contents( $dest, $scraper->getResponseData() );
         }
         else {
