@@ -1,7 +1,7 @@
 <?php
 
   define( 'TEMPLATE_TAG_PATTERN', '/%%([^%]+)%%/' );
-  define( 'TEMPLATE_FUNCTION_PATTERN', '/^([^\\(]+)\\([^\\)]*)\\)$/' );
+  define( 'TEMPLATE_FUNCTION_PATTERN', '/^([^\(]+)\(([^\)]*)\)$/' );
 
   class Template {
 
