@@ -14,8 +14,8 @@
 
     public function render( $data ) {
       $resolved = array();
-      if( preg_match_all( TEMPLATE_TAG_PATTERN, $this->mTplText, $m, PREG_SET_ORDER ) ) {
-        foreach( $m as $tag ) {
+      if( preg_match_all( TEMPLATE_TAG_PATTERN, $this->mTplText, $m0, PREG_SET_ORDER ) ) {
+        foreach( $m0 as $tag ) {
           $subject = $tag[ 0 ];
           if( !isset( $resolved[ $subject ] ) ) {
             $expression = trim( $tag[ 1 ] );
@@ -24,8 +24,8 @@
             $field = trim( $a[ 0 ] );
             $functions = array();
             for( $i = 1; $i < $n - 1; $i++ ) {
-              if( preg_match( TEMPLATE_FUNCTION_PATTERN, trim( $a[ $i ] ), $m ) ) {
-                $functions[ trim( $m[ 1 ] ) ] = array_map( 'trim', explode( ',', $m[ 2 ] ) );
+              if( preg_match( TEMPLATE_FUNCTION_PATTERN, trim( $a[ $i ] ), $m1 ) ) {
+                $functions[ trim( $m1[ 1 ] ) ] = array_map( 'trim', explode( ',', $m1[ 2 ] ) );
               }
             }
             $value = '';
