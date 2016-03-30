@@ -15,6 +15,7 @@
   */
 
   require_once( DIR_LIB . '/i_web_application.inc.php' );
+  require_once( DIR_LIB . '/template.inc.php' );
 
  /**
   * Base class for Peel web application classes.
@@ -94,10 +95,8 @@
     * @return void
     */
     public function tpl( $idt ) {
-      $tplFile = sprintf( '%s/%s.tpl', DIR_TPL, $idt );
-      if( file_exists( $tplFile ) ) {
-        readfile( $tplFile );
-      }
+      $tpl = new Template( $idt );
+      echo( $tpl->render( array( 'pagetitle' => '  Espens template-klasse   ' ) ) );
     }
   }
 ?>
