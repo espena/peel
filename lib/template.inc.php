@@ -33,7 +33,9 @@
               $value = $data[ $field ];
               foreach( $functions as $name => $params ) {
                 if( function_exists( $name ) ) {
-                  die( 'er her' );
+
+                  die( print_r( array_merge( array( $value ), $params ), true ) );
+
                   $value = call_user_func_array( $name, array_merge( array( $value ), $params ) );
                 }
               }
