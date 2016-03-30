@@ -15,6 +15,6 @@
 </head>
 
 <body>
-  <script src="js/scripts.js"></script>
+  <script src="js/peel.js"></script>
 </body>
 </html>
