@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>%%pagetitle%%</title>
+  <title>%%pagetitle|trim%%</title>
   <meta name="description" content="The HTML5 Herald">
   <meta name="author" content="SitePoint">
 
