@@ -8,11 +8,12 @@
     private $mTplText;
 
     public function __construct( $idt ) {
-      $tplFile = sprintf( '%s/%s.tpl', DIR_TPL, $tpl );
+      $tplFile = sprintf( '%s/%s.tpl', DIR_TPL, $idt );
       $this->mTplText = file_exists( $tplFile ) ? file_get_contents( $tplFile ) : '';
     }
 
     public function render( $data ) {
+      $resolved = array();
       if( preg_match_all( TEMPLATE_TAG_PATTERN, $this->mTplText, $m, PREG_SET_ORDER ) ) {
         foreach( $m as $tag ) {
           $subject = $tag[ 0 ];
