@@ -25,7 +25,9 @@
             $functions = array();
             for( $i = 1; $i < $n; $i++ ) {
               if( preg_match( TEMPLATE_FUNCTION_PATTERN, trim( $a[ $i ] ), $m1 ) ) {
-                $functions[ trim( $m1[ 1 ] ) ] = array_map( 'trim', explode( ',', $m1[ 2 ] ) );
+                $f = trim( $m1[ 1 ] );
+                $p = trim( $m1[ 2 ] );
+                $functions[ $f ] = ( $p == '' ? array() : array_map( 'trim', explode( ',', $p ) ) );
               }
             }
             $value = '';
@@ -33,9 +35,6 @@
               $value = $data[ $field ];
               foreach( $functions as $name => $params ) {
                 if( function_exists( $name ) ) {
-
-                  die( print_r( array_merge( array( $value ), $params ), true ) );
-
                   $value = call_user_func_array( $name, array_merge( array( $value ), $params ) );
                 }
               }
