@@ -41,6 +41,7 @@
           }
         }
       }
+      die( print_r( $resolved, true ) );
       return str_replace( array_keys( $resolved ), array_values( $resolved ), $this->mTplText );
     }
   }
