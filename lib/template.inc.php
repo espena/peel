@@ -28,6 +28,7 @@
                 $functions[ trim( $m1[ 1 ] ) ] = array_map( 'trim', explode( ',', $m1[ 2 ] ) );
               }
             }
+            die( print_r( $functions, true ) );
             $value = '';
             if( isset( $data[ $field ] ) ) {
               $value = $data[ $field ];
@@ -41,7 +42,6 @@
           }
         }
       }
-      die( print_r( $resolved, true ) );
       return str_replace( array_keys( $resolved ), array_values( $resolved ), $this->mTplText );
     }
   }
