@@ -28,12 +28,12 @@
                 $functions[ trim( $m1[ 1 ] ) ] = array_map( 'trim', explode( ',', $m1[ 2 ] ) );
               }
             }
-            die( print_r( $functions, true ) );
             $value = '';
             if( isset( $data[ $field ] ) ) {
               $value = $data[ $field ];
               foreach( $functions as $name => $params ) {
                 if( function_exists( $name ) ) {
+                  die( 'er her' );
                   $value = call_user_func_array( $name, array_merge( array( $value ), $params ) );
                 }
               }
