@@ -23,7 +23,7 @@
             $n = count( $a );
             $field = trim( $a[ 0 ] );
             $functions = array();
-            for( $i = 1; $i < $n - 1; $i++ ) {
+            for( $i = 1; $i < $n; $i++ ) {
               if( preg_match( TEMPLATE_FUNCTION_PATTERN, trim( $a[ $i ] ), $m1 ) ) {
                 $functions[ trim( $m1[ 1 ] ) ] = array_map( 'trim', explode( ',', $m1[ 2 ] ) );
               }
