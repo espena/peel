@@ -19,7 +19,7 @@
     }
 
     public function run() {
-      $this->handleOAuthFlow( isset( $_SERVER['PATH_INFO'] ) ? $_SERVER['PATH_INFO'] : '/' );
+      $this->handleOAuthFlow( isset( $_GET[ 'dbx' ] ) ? $_GET[ 'dbx' ] : '' );
       $this->mBase->run();
     }
 
@@ -45,31 +45,31 @@
 
     private function handleOAuthFlow( $req ) {
       switch( $req ) {
-        case '/':
+        case '':
           $dbxClient = $this->getDbxClient();
           if( $dbxClient == null ) {
-            header( 'Location: /dropbox-auth-start' );
+            header( 'Location: /?dbx=dropbox-auth-start' );
             exit;
           }
           break;
 
-        case '/download':
+        case 'download':
 
           break;
 
-        case '/upload':
+        case 'upload':
 
           break;
 
-        case '/dropbox-auth-start':
+        case 'dropbox-auth-start':
 
           break;
 
-        case '/dropbox-auth-finish':
+        case 'dropbox-auth-finish':
 
           break;
 
-        case '/dropbox-auth-unlink':
+        case 'dropbox-auth-unlink':
 
           break;
 
