@@ -96,7 +96,7 @@
     */
     public function tpl( $idt ) {
       $tpl = new Template( $idt );
-      echo( $tpl->render( array( 'pagetitle' => '  Espens template-klasse   ' ) ) );
+      echo( $tpl->render( array( 'pagetitle' => 'P E E L' ) ) );
     }
   }
 ?>
