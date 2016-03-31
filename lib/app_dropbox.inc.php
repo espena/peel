@@ -14,6 +14,18 @@
       $this->mBase = $base;
     }
 
+    public function getConfig() {
+      return $this->mBase->getConfig();
+    }
+
+    public function run() {
+      $this->mBase->run();
+    }
+
+    public function terminate() {
+      $this->mBase->terminate();
+    }
+
     public function tpl( $idt ) {
       $this->mBase->tpl( $idt );
     }
