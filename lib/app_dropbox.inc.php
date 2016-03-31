@@ -47,8 +47,10 @@
       switch( $req ) {
         case '/':
           $dbxClient = $this->getDbxClient();
-          var_dump( $dbxClient );
-          die();
+          if( $dbxClient == null ) {
+            header( 'Location: /dropbox-auth-start' );
+            exit;
+          }
           break;
 
         case '/download':
