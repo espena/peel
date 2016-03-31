@@ -20,6 +20,7 @@
   require_once( DIR_LIB . '/app_web_frontend.inc.php' );
   require_once( DIR_LIB . '/app_enabler.inc.php' );
   require_once( DIR_LIB . '/app_peel_engine.inc.php' );
+  require_once( DIR_LIB . '/app_dropbox.inc.php' );
   require_once( DIR_LIB . '/peeler__basic.inc.php' );
   require_once( DIR_LIB . '/peeler__in_href.inc.php' );
   require_once( DIR_LIB . '/peeler__url_metadata.inc.php' );
@@ -67,6 +68,7 @@
       else {
         $app = new AppWebBase( $app );
         $app = new AppWebFrontend( $app );
+        $app = new AppDropbox( $app );
       }
       return $app;
     }
