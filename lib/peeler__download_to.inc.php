@@ -31,8 +31,7 @@
         $log->message( "Downloading %s", basename( $url ) );
         $scraper->get( $url );
         $res = $scraper->getResponseCode();
-        if( 200 == $res ) {
-          $dest = $this->resolveDestinationPath( $dir, $sourceInfo );
+        if( 200 == $res && $dest = $this->resolveDestinationPath( $dir, $sourceInfo ) ) {
           $log->message( "Writing %s", $dest );
           file_put_contents( $dest, $scraper->getResponseData() );
         }
