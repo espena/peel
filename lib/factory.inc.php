@@ -68,7 +68,7 @@
       else {
         $app = new AppWebBase( $app );
         $app = new AppWebFrontend( $app );
-        $app = new AppDropbox( $app );
+        //$app = new AppDropbox( $app );
       }
       return $app;
     }
