@@ -23,6 +23,7 @@
         catch( Exception $e ) {
           $log = Factory::getLogger();
           $log->error( $e->getMessage() );
+          exit();
         }
       }
     }
