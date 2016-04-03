@@ -47,6 +47,10 @@
           $exp = $this->execute( $func, $params, $exp );
         }
       }
+      else {
+        $log = Factory::getLogger();
+        $log->error( "Missing %s in metadata", $tag );
+      }
       return $exp;
     }
     private function execute( $func, $params, $exp ) {
