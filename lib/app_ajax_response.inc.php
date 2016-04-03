@@ -25,7 +25,7 @@
     }
 
     private function getJson() {
-      switch( $_GET[ 'ajax' ] ) {
+      switch( $_GET[ 'json' ] ) {
         case 'peel_log':
           $log = Factory::getLogger();
           $data = $log->getContent();
