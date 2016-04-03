@@ -25,7 +25,7 @@
         foreach( $m0 as $inc ) {
           if( !isset( $resolved[ $inc[ 0 ] ] ) ) {
             $tpl = new Template( $inc[ 1 ] );
-            $resolved[ $inc[ 0 ] ] = $tpl->render( isset( $this->mData[ $inc[ 1 ] ] ) ? $this->mData[ $inc[ 1 ] ] : $this->mData );
+            $resolved[ $inc[ 0 ] ] = $tpl->render( isset( $data[ $inc[ 1 ] ] ) ? $data[ $inc[ 1 ] ] : $data );
           }
         }        
       }
