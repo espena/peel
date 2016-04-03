@@ -21,7 +21,7 @@
   }
   function startUpdateInterval() {
     window.requestAnimationFrame(
-      function() {
+      function( ts ) {
         if( updateStack.ts == 0 ) {
           updateStack.ts = ts;
           if( ( ts - updateStack.ts ) >= updateStack.ms ) {
