@@ -3,6 +3,7 @@
   require_once( DIR_LIB . '/i_logger.inc.php' );
   class LogFile implements ILogger {
     private $mLogFile;
+    private $mLogContent;
     private $mMaxSize;
     private $mConfig;
     public function __construct() {
@@ -62,8 +63,24 @@
     }
     private function write( $prefix, $args ) {
       $str = call_user_func_array( 'sprintf', $args );
-      file_put_contents( $this->mLogFile, sprintf( "%s %s\n", $prefix, $str ), FILE_APPEND );
+      $ln = sprintf( "%s %s\n", $prefix, $str );
+      file_put_contents( $this->mLogFile, $ln, FILE_APPEND );
+      if( !empty( $this->mLogContent ) ) {
+        $this->mLogContent[ ] = array( 'hash': md5( $ln ), 'entry': $ln );
+      }
       $this->purge();
+    }
+    public function getContent() {
+      if( empty( $this->mLogContent ) ) {
+        $this->mLogContent = array();
+        $fp = fopen( $this->mLogFile, 'r' );
+        while( !feof( $fp ) ) {
+          $ln = fgets( $fp );
+          $this->mLogContent[ ] = array( 'hash': md5( $ln ), 'entry': $ln );
+        }
+        fclose( $fp );
+      }
+      return $this->mLogContent;
     }
   }
 ?>
