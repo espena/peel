@@ -49,6 +49,7 @@
       $c = $this->getConfig();
       $dir = $c[ 'peeler' ][ 'download_to' ];
       if( !file_exists( $dir ) ) {
+        $log = Factory::getLogger();
         $log->warning( "Directory %s does not exist", $dir );
         if( mkdir( $dir, 0777, true ) ) {
           $log->message( "Destination directory successfully created" );
