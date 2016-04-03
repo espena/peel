@@ -26,7 +26,7 @@
     if( ( ts - updateStack.ts ) >= updateStack.ms ) {
       updateStack.ts = 0;
       for( var i = 0; i < updateStack.callbacks.length; i++ ) {
-        console.log( typeof( updateStack.callbacks[ i ]() ) );
+        console.log( typeof( updateStack.callbacks[ i ] ) );
         updateStack.callbacks[ i ]();
       }
     }
