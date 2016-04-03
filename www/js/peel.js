@@ -5,5 +5,5 @@
   function init_peel_log( $log ) {
     console.log( $log );
   }
-  $( document.ready( main ) );
+  $( document ).ready( main );
 } )( jQuery );
