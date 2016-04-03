@@ -22,11 +22,15 @@
   function updateInterval( ts ) {
     if( updateStack.ts == 0 ) {
       updateStack.ts = ts;
-      if( ( ts - updateStack.ts ) >= updateStack.ms ) {
-        updateStack.ts = 0;
-        for( var i = 0; i < updateStack.callbacks.length; i++ ) {
-          updateStack.callbacks[ i ]();
-        } } } window.requestAnimationFrame( updateInterval );
+    }
+    if( ( ts - updateStack.ts ) >= updateStack.ms ) {
+      updateStack.ts = 0;
+      for( var i = 0; i < updateStack.callbacks.length; i++ ) {
+        console.log( typeof( updateStack.callbacks[ i ]() ) );
+        updateStack.callbacks[ i ]();
+      }
+    }
+    window.requestAnimationFrame( updateInterval );
   }
   $( document ).ready( main );
 } )( jQuery );
