@@ -21,6 +21,7 @@
   require_once( DIR_LIB . '/app_enabler.inc.php' );
   require_once( DIR_LIB . '/app_peel_engine.inc.php' );
   require_once( DIR_LIB . '/app_dropbox.inc.php' );
+  require_once( DIR_LIB . '/app_ajax_response.inc.php' );
   require_once( DIR_LIB . '/peeler__basic.inc.php' );
   require_once( DIR_LIB . '/peeler__in_href.inc.php' );
   require_once( DIR_LIB . '/peeler__url_metadata.inc.php' );
@@ -75,8 +76,13 @@
         }
         else {
           self::$mTheApp = new AppWebBase( self::$mTheApp );
-          self::$mTheApp = new AppWebFrontend( self::$mTheApp );
-          //self::$mTheApp = new AppDropbox( self::$mTheApp );
+          if( !empty( $_GET[ 'json' ] ) ) {
+            self::$mTheApp = new AppAjaxResponse( self::$mTheApp );
+          }
+          else {
+            self::$mTheApp = new AppWebFrontend( self::$mTheApp );
+            //self::$mTheApp = new AppDropbox( self::$mTheApp );
+          }
         }
       }
       return self::$mTheApp;
