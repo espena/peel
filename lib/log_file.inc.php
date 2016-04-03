@@ -66,7 +66,7 @@
       $ln = sprintf( "%s %s\n", $prefix, $str );
       file_put_contents( $this->mLogFile, $ln, FILE_APPEND );
       if( !empty( $this->mLogContent ) ) {
-        $this->mLogContent[ ] = array( 'hash': md5( $ln ), 'entry': $ln );
+        $this->mLogContent[ ] = array( 'hash' => md5( $ln ), 'entry' => $ln );
       }
       $this->purge();
     }
@@ -76,7 +76,7 @@
         $fp = fopen( $this->mLogFile, 'r' );
         while( !feof( $fp ) ) {
           $ln = fgets( $fp );
-          $this->mLogContent[ ] = array( 'hash': md5( $ln ), 'entry': $ln );
+          $this->mLogContent[ ] = array( 'hash' => md5( $ln ), 'entry' => $ln );
         }
         fclose( $fp );
       }
