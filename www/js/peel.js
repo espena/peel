@@ -17,7 +17,7 @@
   }
   function initPeelLog( ts ) {
     $log = $( arguments[ 1 ] );
-    updateStack.addCallback( updatePeelLog );
+    updateStack.callbacks.push( updatePeelLog );
   }
   function startUpdateInterval() {
     window.requestAnimationFrame(
@@ -27,7 +27,6 @@
           if( ( ts - updateStack.ts ) >= updateStack.ms ) {
             updateStack.ts = 0;
             for( var i = 0; i < updateStack.callbacks.length; i++ ) {
-              console.log( typeof(updateStack.callbacks[ i ]) );
               if( typeof( updateStack.callbacks[ i ] ) == 'Function' ) {
                 updateStack.callbacks[ i ]();
               } } } } window.requestAnimationFrame( startUpdateInterval );
