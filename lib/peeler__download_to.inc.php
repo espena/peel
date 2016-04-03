@@ -23,20 +23,25 @@
       return $this->mPeeler->getConfig();
     }
     private function download( $dir ) {
+      $c = $this->getConfig();
+      $db = Factory::getDatabase();
       $log = Factory::getLogger();
       $data = $this->mPeeler->getData();
       $scraper = Factory::createScraper();
       foreach( $data as $sourceInfo ) {
         $url = $sourceInfo[ 'url' ];
-        $log->message( "Downloading %s", basename( $url ) );
+        $log->message( "Found %s", basename( $url ) );
         $scraper->get( $url );
         $res = $scraper->getResponseCode();
-        if( 200 == $res && $dest = $this->resolveDestinationPath( $dir, $sourceInfo ) ) {
-          $log->message( "Writing %s", $dest );
-          file_put_contents( $dest, $scraper->getResponseData() );
-        }
-        else {
-          $log->error( "Server status %s", $res, basename( $url ) );
+        if( $dest = $this->resolveDestinationPath( $dir, $sourceInfo ) ) {
+          if( $res == 200 ) {
+            $log->message( "Writing %s", $dest );
+            file_put_contents( $dest, $scraper->getResponseData() );
+            $db->registerUrlDownloaded( $url, $c[ 'peeler' ][ 'name' ], $dest, 'naming_ok' );
+          }
+          else {
+            $log->error( "Server status %s", $res, basename( $url ) );
+          }
         }
       }
     }
