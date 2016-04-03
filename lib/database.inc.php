@@ -15,7 +15,11 @@
             $c[ 'password' ],
             '',
             isset( $c[ 'port' ] ) ? $c[ 'port' ] : '3306' );
-        if( !$this->mDb->select_db( $c[ 'database' ] ) ) {
+        if( $this->mDb->error ) {
+          $log = Factory::getLogger();
+          $log->error( $this->mDb->error );
+        }
+        else if( !$this->mDb->select_db( $c[ 'database' ] ) ) {
           $this->createDb();
         }
       }
