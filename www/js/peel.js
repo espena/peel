@@ -25,9 +25,8 @@
       if( ( ts - updateStack.ts ) >= updateStack.ms ) {
         updateStack.ts = 0;
         for( var i = 0; i < updateStack.callbacks.length; i++ ) {
-          if( typeof( updateStack.callbacks[ i ] ) == 'Function' ) {
-            updateStack.callbacks[ i ]();
-          } } } } window.requestAnimationFrame( updateInterval );
+          updateStack.callbacks[ i ]();
+        } } } window.requestAnimationFrame( updateInterval );
   }
   $( document ).ready( main );
 } )( jQuery );
