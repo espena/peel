@@ -29,7 +29,7 @@
             for( var i = 0; i < updateStack.callbacks.length; i++ ) {
               if( typeof( updateStack.callbacks[ i ] ) == 'Function' ) {
                 updateStack.callbacks[ i ]();
-              } } } } window.requestAnimationFrame( update );
+              } } } } window.requestAnimationFrame( startUpdateInterval );
       } );
   }
   $( document ).ready( main );
