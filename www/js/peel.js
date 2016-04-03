@@ -10,7 +10,7 @@
     };
   function main() {
     $( '.peel_log' ).each( initPeelLog );
-    startUpdateInterval();
+    window.requestAnimationFrame( startUpdateInterval );
   }
   function updatePeelLog() {
     console.log( 'updating peel log' );
@@ -19,18 +19,15 @@
     $log = $( arguments[ 1 ] );
     updateStack.callbacks.push( updatePeelLog );
   }
-  function startUpdateInterval() {
-    window.requestAnimationFrame(
-      function( ts ) {
-        if( updateStack.ts == 0 ) {
-          updateStack.ts = ts;
-          if( ( ts - updateStack.ts ) >= updateStack.ms ) {
-            updateStack.ts = 0;
-            for( var i = 0; i < updateStack.callbacks.length; i++ ) {
-              if( typeof( updateStack.callbacks[ i ] ) == 'Function' ) {
-                updateStack.callbacks[ i ]();
-              } } } } window.requestAnimationFrame( startUpdateInterval );
-      } );
+  function updateInterval( ts ) {
+    if( updateStack.ts == 0 ) {
+      updateStack.ts = ts;
+      if( ( ts - updateStack.ts ) >= updateStack.ms ) {
+        updateStack.ts = 0;
+        for( var i = 0; i < updateStack.callbacks.length; i++ ) {
+          if( typeof( updateStack.callbacks[ i ] ) == 'Function' ) {
+            updateStack.callbacks[ i ]();
+          } } } } window.requestAnimationFrame( updateInterval );
   }
   $( document ).ready( main );
 } )( jQuery );
