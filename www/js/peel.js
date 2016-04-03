@@ -20,6 +20,7 @@
     updateStack.callbacks.push( updatePeelLog );
   }
   function updateInterval( ts ) {
+    console.log( ts );
     if( updateStack.ts == 0 ) {
       updateStack.ts = ts;
       if( ( ts - updateStack.ts ) >= updateStack.ms ) {
