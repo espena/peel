@@ -18,12 +18,13 @@
     if( updatePeelLog.lock ) {
       if( arguments[ 1 ] == 'success' ) {
         var logData = arguments[ 0 ];
+        console.log( logData );
         $( '.peel_log' ).each(
           function( i, e ) {
             $log = $( e );
             $log.html( '' );
             for( var k in logData ) {
-              $log.append( '<p>' + logData[ k ] + '</p>' );
+              $log.append( '<p>' + logData[ k ].entry + '</p>' );
             }
           }
         );
