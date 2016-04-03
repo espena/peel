@@ -16,7 +16,18 @@
   }
   function updatePeelLog() {
     if( updatePeelLog.lock ) {
-      console.log( arguments );
+      if( arguments[ 1 ] == 'success' ) {
+        var logData = arguments[ 0 ];
+        $( '.peel_log' ).each(
+          function( i, e ) {
+            $log = $( e );
+            $log.html( '' );
+            for( var k in logData ) {
+              $log.append( '<p>' + logData[ k ] + '</p>' );
+            }
+          }
+        );
+      }
       updatePeelLog.lock = false;
     }
     else {
