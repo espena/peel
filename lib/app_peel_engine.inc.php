@@ -81,12 +81,15 @@
     * @return void
     */
     public function run() {
+      $log = Factory::getLogger();
+      $log->message( 'Peeler engine started' );
       $this->mBase->run();
       $c = $this->getConfig();
       foreach( $c[ 'peelers' ] as $name => $peelerConf ) {
         $this->mPeelers[ $name ] = Factory::createPeeler( $peelerConf );
         $this->mPeelers[ $name ]->start();
       }
+      $log->message( 'Peeler engine finished' );
     }
 
    /**
