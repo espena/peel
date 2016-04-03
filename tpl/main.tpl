@@ -13,6 +13,7 @@
 
 <body>
   ##content##
+  <script src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
   <script src="js/peel.js"></script>
 </body>
 </html>
