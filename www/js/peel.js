@@ -10,6 +10,7 @@
     };
   function main() {
     $( '.peel_log' ).each( initPeelLog );
+    updateStack.callbacks.push( updatePeelLog );
     window.requestAnimationFrame( updateInterval );
   }
   function updatePeelLog() {
@@ -17,10 +18,8 @@
   }
   function initPeelLog( ts ) {
     $log = $( arguments[ 1 ] );
-    updateStack.callbacks.push( updatePeelLog );
   }
   function updateInterval( ts ) {
-    console.log( ts );
     if( updateStack.ts == 0 ) {
       updateStack.ts = ts;
       if( ( ts - updateStack.ts ) >= updateStack.ms ) {
