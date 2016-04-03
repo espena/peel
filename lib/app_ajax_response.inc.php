@@ -16,7 +16,7 @@
 
     public function run() {
       header( 'content-type: application/json; charset=utf-8' );
-      $data = json_encode( array( "foo" => "bar" ) );
+      $json = json_encode( array( "foo" => "bar" ) );
       if( empty( $_GET[ 'callback' ] ) ) {
         echo $json;
       }
