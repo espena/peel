@@ -33,6 +33,7 @@
   require_once( DIR_LIB . '/log_file.inc.php' );
 
   class Factory {
+    private static $mTheApp; // The one and only application object
     private static $mConfig;
     private static $mLogger;
     private static $mDatabase;
@@ -60,23 +61,25 @@
       return new Scraper();
     }
     public static function getApplication() {
-      $app = new AppBase();
-      if( PHP_SAPI == 'cli' ) {
-        $app = new AppCliBase( $app );
-        $p = self::getParameters();
-        if( isset( $p[ 'e' ] ) || isset( $p[ 'enable' ] ) || isset( $p[ 'd' ] ) || isset( $p[ 'disable' ] ) ) {
-          $app = new AppEnabler( $app );
+      if( !is_object( self::$mTheApp ) ) {
+        self::$mTheApp = new AppBase();
+        if( PHP_SAPI == 'cli' ) {
+          self::$mTheApp = new AppCliBase( self::$mTheApp );
+          $p = self::getParameters();
+          if( isset( $p[ 'e' ] ) || isset( $p[ 'enable' ] ) || isset( $p[ 'd' ] ) || isset( $p[ 'disable' ] ) ) {
+            self::$mTheApp = new AppEnabler( self::$mTheApp );
+          }
+          else {
+            self::$mTheApp = new AppPeelEngine( self::$mTheApp );
+          }
         }
         else {
-          $app = new AppPeelEngine( $app );
+          self::$mTheApp = new AppWebBase( self::$mTheApp );
+          self::$mTheApp = new AppWebFrontend( self::$mTheApp );
+          //self::$mTheApp = new AppDropbox( self::$mTheApp );
         }
       }
-      else {
-        $app = new AppWebBase( $app );
-        $app = new AppWebFrontend( $app );
-        //$app = new AppDropbox( $app );
-      }
-      return $app;
+      return self::$mTheApp;
     }
     public static function getConfig() {
       if( !self::$mConfig ) {
