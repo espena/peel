@@ -16,13 +16,24 @@
 
     public function run() {
       header( 'content-type: application/json; charset=utf-8' );
-      $json = json_encode( array( "foo" => "bar" ) );
       if( empty( $_GET[ 'callback' ] ) ) {
-        echo $json;
+        echo $this->getJson();
       }
       else {
-        echo $_GET['callback'] . '(' . $json . ')';
+        echo $_GET['callback'] . '(' . $this->getJson() . ')';
       }
+    }
+
+    private function getJson() {
+      switch( $_GET[ 'ajax' ] ) {
+        case 'peel_log':
+          $log = Factory::getLogger();
+          $data = $log->getContent();
+          break;
+        default:
+          $data = array();
+      }
+      return json_encode( $data );
     }
 
     public function terminate() {
