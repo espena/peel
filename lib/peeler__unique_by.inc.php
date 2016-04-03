@@ -12,6 +12,24 @@
     public function start() {
       $this->mPeeler->start();
     }
+    public function resolveDestinationPath( $dir, $sourceInfo ) {
+      $log = Factory::getLogger();
+      $res = $this->mPeeler->resolveDestinationPath( $dir, $sourceInfo );
+      $c = $this->getConfig();
+      $db = Factory::getDatabase();
+      switch( $c[ 'peeler' ][ 'unique_by' ] ) {
+        case 'url':
+          if( $db->urlDownloaded( $sourceInfo[ 'url' ] ) ) {
+            $log->message( 'Skipping %s (already downloaded)', $sourceInfo[ 'url' ] );
+            $res = null;
+          }
+          break;
+        case 'checksum':
+          
+          break;
+      }
+      return $res;
+    }
     public function getData( $key = '' ) {
       return $this->mPeeler->getData( $key );
     }
