@@ -4,7 +4,7 @@
   }
   function init_peel_log() {
     $log = arguments[ 2 ];
-    console.log( $log );
+    console.log( arguments );
   }
   $( document ).ready( main );
 } )( jQuery );
