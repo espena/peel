@@ -19,7 +19,7 @@
         }
         else {
           $log = Factory::getLogger();
-          $log->error( "The URL did not match 'url_metadata' pattern (%s)", $url );
+          $log->error( "Missing or unexpected information in url: %s", $sourceInfo[ 'url' ] );
         }
       }
     }
