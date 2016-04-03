@@ -2,19 +2,30 @@
   var
     updateStack = {
       ts: 0,
-      ms: 1000,
+      ms: 2000,
       callbacks: [ ],
       addCallback: function( callback ) {
         this.callbacks.push( callback );
+        callback.lock = false;
       }
     };
   function main() {
     $( '.peel_log' ).each( initPeelLog );
-    updateStack.callbacks.push( updatePeelLog );
+    updateStack.addCallback( updatePeelLog );
     window.requestAnimationFrame( updateInterval );
   }
   function updatePeelLog() {
-    console.log( 'updating peel log' );
+    if( this.lock ) {
+      console.log( arguments );
+      this.lock = false;
+    }
+    else {
+      this.lock = true;
+      $.ajax( {
+        url: '?json=peel_log',
+        success: updatePeelLog
+      } );
+    }
   }
   function initPeelLog( ts ) {
     $log = $( arguments[ 1 ] );
@@ -26,8 +37,9 @@
     if( ( ts - updateStack.ts ) >= updateStack.ms ) {
       updateStack.ts = 0;
       for( var i = 0; i < updateStack.callbacks.length; i++ ) {
-        console.log( typeof( updateStack.callbacks[ i ] ) );
-        updateStack.callbacks[ i ]();
+        if( typeof( updateStack.callbacks[ i ] ) == 'function' ) {
+          updateStack.callbacks[ i ]();
+        }
       }
     }
     window.requestAnimationFrame( updateInterval );
