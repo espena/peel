@@ -10,7 +10,7 @@
     };
   function main() {
     $( '.peel_log' ).each( initPeelLog );
-    window.requestAnimationFrame( startUpdateInterval );
+    window.requestAnimationFrame( updateInterval );
   }
   function updatePeelLog() {
     console.log( 'updating peel log' );
