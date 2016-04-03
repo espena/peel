@@ -8,8 +8,13 @@
     private $mTplText;
 
     public function __construct( $idt ) {
-      $tplFile = sprintf( '%s/%s.tpl', DIR_TPL, $idt );
-      $this->mTplText = file_exists( $tplFile ) ? file_get_contents( $tplFile ) : '';
+      if( file_exists( $idt ) ) {
+        $tplFile = $idt;
+      }
+      else {
+        $tplFile = sprintf( '%s/%s.tpl', DIR_TPL, $idt );
+      }
+      $this->mTplText = file_exists( $tplFile ) ? file_get_contents( $tplFile ) : $idt;
     }
 
     public function render( $data ) {
