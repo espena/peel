@@ -8,19 +8,21 @@
       $this->mConfig = $config;
       if( isset( $this->mConfig[ 'mysql' ] ) ) {
         $c = $this->mConfig[ 'mysql' ];
-        $this->mDb =
-          new MySQLi(
-            $c[ 'host' ],
-            $c[ 'user' ],
-            $c[ 'password' ],
-            '',
-            isset( $c[ 'port' ] ) ? $c[ 'port' ] : '3306' );
-        if( $this->mDb->error ) {
-          $log = Factory::getLogger();
-          $log->error( $this->mDb->error );
+        try {
+          $this->mDb =
+            new MySQLi(
+              $c[ 'host' ],
+              $c[ 'user' ],
+              $c[ 'password' ],
+              '',
+              isset( $c[ 'port' ] ) ? $c[ 'port' ] : '3306' );
+          if( !$this->mDb->select_db( $c[ 'database' ] ) ) {
+            $this->createDb();
+          }
         }
-        else if( !$this->mDb->select_db( $c[ 'database' ] ) ) {
-          $this->createDb();
+        catch( Exception $e ) {
+          $log = Factory::getLogger();
+          $log->error( $e->getMessage() );
         }
       }
     }
