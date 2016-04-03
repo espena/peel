@@ -1,6 +1,7 @@
 <?php
 
   define( 'TEMPLATE_TAG_PATTERN', '/%%([^%]+)%%/' );
+  define( 'TEMPLATE_INC_PATTERN', '/##([^%]+)##/' );
   define( 'TEMPLATE_FUNCTION_PATTERN', '/^([^\\(]+)\\(([^\\)]*)\\)$/' );
 
   class Template {
@@ -19,6 +20,16 @@
 
     public function render( $data ) {
       $resolved = array();
+      // Expand template includes
+      if( preg_match_all( TEMPLATE_INC_PATTERN, $this->mTplText, $m0, PREG_SET_ORDER ) ) {
+        foreach( $m0 as $inc ) {
+          if( !isset( $resolved[ $inc[ 0 ] ] ) ) {
+            $tpl = new Template( $inc[ 1 ] );
+            $resolved[ $inc[ 0 ] ] = $tpl->render( isset( $this->mData[ $inc[ 1 ] ] ) ? $this->mData[ $inc[ 1 ] ] : $this->mData );
+          }
+        }        
+      }
+      // Expand value tags
       if( preg_match_all( TEMPLATE_TAG_PATTERN, $this->mTplText, $m0, PREG_SET_ORDER ) ) {
         foreach( $m0 as $tag ) {
           $subject = $tag[ 0 ];
