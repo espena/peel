@@ -75,8 +75,9 @@
         $this->mLogContent = array();
         $fp = fopen( $this->mLogFile, 'r' );
         while( !feof( $fp ) ) {
-          $ln = fgets( $fp );
-          $this->mLogContent[ ] = array( 'hash' => md5( $ln ), 'entry' => $ln );
+          if( $ln = fgets( $fp ) ) {
+            $this->mLogContent[ ] = array( 'hash' => md5( $ln ), 'entry' => $ln );
+          }
         }
         fclose( $fp );
       }
