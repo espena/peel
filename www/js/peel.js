@@ -15,12 +15,12 @@
     window.requestAnimationFrame( updateInterval );
   }
   function updatePeelLog() {
-    if( this.lock ) {
+    if( updatePeelLog.lock ) {
       console.log( arguments );
-      this.lock = false;
+      updatePeelLog.lock = false;
     }
     else {
-      this.lock = true;
+      updatePeelLog.lock = true;
       $.ajax( {
         url: '?json=peel_log',
         success: updatePeelLog
