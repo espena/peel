@@ -25,7 +25,9 @@
   require_once( DIR_LIB . '/peeler__in_href.inc.php' );
   require_once( DIR_LIB . '/peeler__url_metadata.inc.php' );
   require_once( DIR_LIB . '/peeler__rename_to.inc.php' );
+  require_once( DIR_LIB . '/peeler__unique_by.inc.php' );
   require_once( DIR_LIB . '/peeler__download_to.inc.php' );
+  require_once( DIR_LIB . '/database.inc.php' );
   require_once( DIR_LIB . '/scraper.inc.php' );
   require_once( DIR_LIB . '/configuration_file.inc.php' );
   require_once( DIR_LIB . '/log_file.inc.php' );
@@ -33,6 +35,7 @@
   class Factory {
     private static $mConfig;
     private static $mLogger;
+    private static $mDatabase;
     private static $mParams;
     public static function createPeeler( $conf ) {
       $peeler = new Peeler_basic( $conf );
@@ -44,6 +47,9 @@
       }
       if( !empty( $conf[ 'peeler' ][ 'rename_to' ] ) ) {
         $peeler = new Peeler_renameTo( $peeler );
+      }
+      if( !empty( $conf[ 'peeler' ][ 'unique_by' ] ) ) {
+        $peeler = new Peeler_uniqueBy( $peeler );
       }
       if( !empty( $conf[ 'peeler' ][ 'download_to' ] ) ) {
         $peeler = new Peeler_downloadTo( $peeler );
@@ -77,6 +83,12 @@
         self::$mConfig = ConfigurationFile::parse();
       }
       return self::$mConfig;
+    }
+    public static function getDatabase() {
+      if( !self::$mDatabase ) {
+        self::$mDatabase = new Database( self::getConfig() );
+      }
+      return self::$mDatabase;
     }
     public static function getLogger() {
       if( !self::$mLogger ) {
