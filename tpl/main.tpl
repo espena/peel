@@ -13,7 +13,6 @@
 
 <body>
   ##content##
-  <script src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
-  <script src="js/peel.js"></script>
+  <script data-main="js/bootstrap" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
 </body>
 </html>
