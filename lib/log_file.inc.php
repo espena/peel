@@ -17,7 +17,9 @@
       }
       $logDir = dirname( $this->mLogFile );
       if( !file_exists( $logDir ) ) {
-        mkdir( $logDir, 0777, true );
+        $prevUmask = umask( 0 );
+        mkdir( $logDir, 0775, true );
+        umask( $prevUmask );
       }
       $this->mMaxSize = $this->mConfig[ 'logging' ][ 'max_size' ];
       $this->mMaxSize = str_replace( ' ', '', $this->mMaxSize );
@@ -66,6 +68,7 @@
       $str = call_user_func_array( 'sprintf', $args );
       $ln = sprintf( "%s %s\n", $prefix, $str );
       file_put_contents( $this->mLogFile, $ln, FILE_APPEND );
+      chmod( $this->mLogFile, 0775 );
       if( !empty( $this->mLogContent ) ) {
         $this->mLogContent[ ] = array( 'hash' => md5( $ln ), 'entry' => $ln );
       }
@@ -74,21 +77,23 @@
     public function getContent() {
       if( empty( $this->mLogContent ) ) {
         $this->mLogContent = array();
-        $fp = fopen( $this->mLogFile, 'r' );
-        while( !feof( $fp ) ) {
-          if( $ln = fgets( $fp ) ) {
-            if( preg_match( '/^(\\d{4}-\\d{2}-\\d{2}) (\\d{2}:\\d{2}:\\d{2}) - ([^ ]+)[ ]+:/i', $ln, $meta ) ) {
-              $this->mLogContent[ ] = array( 
-                'hash' => md5( $ln ),
-                'date' => $meta[ 1 ],
-                'date' => $meta[ 2 ],
-                'type' => strtolower( $meta[ 3 ] ),
-                'text' => $ln );
+        if( file_exists( $this->mLogFile ) ) {
+          $fp = fopen( $this->mLogFile, 'r' );
+          while( !feof( $fp ) ) {
+            if( $ln = fgets( $fp ) ) {
+              if( preg_match( '/^(\\d{4}-\\d{2}-\\d{2}) (\\d{2}:\\d{2}:\\d{2}) - ([^ ]+)[ ]+:\s+([^$]+)$/i', $ln, $meta ) ) {
+                $this->mLogContent[ ] = array( 
+                  'hash' => md5( $ln ),
+                  'date' => $meta[ 1 ],
+                  'time' => $meta[ 2 ],
+                  'type' => strtolower( $meta[ 3 ] ),
+                  'text' => $meta[ 4 ] );
+              }
             }
           }
+          fclose( $fp );
+          $this->mLogContent = array_reverse( $this->mLogContent );
         }
-        fclose( $fp );
-        $this->mLogContent = array_reverse( $this->mLogContent );
       }
       return $this->mLogContent;
     }
