@@ -1,3 +1,1 @@
-<section data-logfile="peel.log" class="peel_log">
-  
-</section>
+<ul data-logfile="peel.log" class="peel_log"></ul>
