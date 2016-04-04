@@ -72,7 +72,6 @@
     public function run() {
       $this->mBase->run();
       // TODO: Implement actions here.
-      Factory::getLogger()->message( 'Peeler engine starting.' );
     }
 
    /**
@@ -84,7 +83,6 @@
     */
     public function terminate() {
       $this->mBase->terminate();
-      Factory::getLogger()->message( 'Peeler engine terminating.' );
     }
 
    /**
