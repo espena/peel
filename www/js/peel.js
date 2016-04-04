@@ -24,7 +24,7 @@
             $log = $( e );
             $log.html( '' );
             for( var k in logData ) {
-              $log.append( '<p>' + logData[ k ].entry + '</p>' );
+              $log.append( '<li class="logentry ' + logData[ k ].type + '">' + logData[ k ].text + '</li>' );
             }
           }
         );
