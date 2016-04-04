@@ -67,8 +67,7 @@
         $this->mDb->next_result();
         if( $res = $this->mDb->store_result() ) {
           if( $res->errorno ) {
-            $log = Factory::getLogger();
-            $log->error( $res->error );
+            Factory::getLogger()->error( $res->error );
           }
           $res->free();
         }
