@@ -76,7 +76,7 @@
         $fp = fopen( $this->mLogFile, 'r' );
         while( !feof( $fp ) ) {
           if( $ln = fgets( $fp ) ) {
-            if( preg_match( '/^(\\d{4}-\\d{2}-\\d{2}) (\\d{2}:\\d{2}:\\d{2}) - ([^ ]+) :/i', $ln, $meta ) ) {
+            if( preg_match( '/^(\\d{4}-\\d{2}-\\d{2}) (\\d{2}:\\d{2}:\\d{2}) - ([^ ]+)[ ]+:/i', $ln, $meta ) ) {
               $this->mLogContent[ ] = array( 
                 'hash' => md5( $ln ),
                 'date' => $meta[ 1 ],
