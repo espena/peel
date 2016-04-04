@@ -2,3 +2,9 @@ html, body {
     margin: 0;
     padding: 0;
 }
+.logentry.warning {
+    color: #f90;
+}
+.logentry.error {
+    color: #f00;
+}
