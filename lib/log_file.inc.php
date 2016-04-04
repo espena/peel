@@ -8,6 +8,7 @@
     private $mConfig;
     public function __construct() {
       $this->mConfig = Factory::getConfig();
+      date_default_timezone_set( $this->mConfig[ 'system' ][ 'timezone' ] );
       $this->mLogFile = isset( $this->mConfig[ 'logging' ][ 'log_file' ] )
                       ? $this->mConfig[ 'logging' ][ 'log_file' ]
                       : DIR_BASE . '/log/peel.log';
@@ -87,6 +88,7 @@
           }
         }
         fclose( $fp );
+        $this->mLogContent = array_reverse( $this->mLogContent );
       }
       return $this->mLogContent;
     }
