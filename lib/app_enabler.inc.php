@@ -100,7 +100,7 @@
       if( empty( $peelerToEnable ) ) return;
       $source = sprintf( '%s/%s.conf', $this->mPathPeelersAvailable, $peelerToEnable );
       $destin = sprintf( '%s/%s.conf', $this->mPathPeelersEnabled, $peelerToEnable );
-      if( file_exists( $source ) ) {
+      if( !file_exists( $destin ) && file_exists( $source ) ) {
         if( symlink( $source, $destin ) ) {
           Factory::getLogger()->message( "Peeler %s successfully enabled", $peelerToEnable );
         }
