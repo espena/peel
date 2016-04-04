@@ -21,8 +21,9 @@
           }
         }
         catch( Exception $e ) {
-          $log = Factory::getLogger();
-          $log->error( $e->getMessage() );
+          Factory::getLogger()->error( $e->getMessage() );
+        }
+        finally {
           exit();
         }
       }
