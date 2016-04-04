@@ -22,8 +22,6 @@
         }
         catch( Exception $e ) {
           Factory::getLogger()->error( $e->getMessage() );
-        }
-        finally {
           exit();
         }
       }
