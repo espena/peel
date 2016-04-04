@@ -81,7 +81,7 @@
                 'hash' => md5( $ln ),
                 'date' => $meta[ 1 ],
                 'date' => $meta[ 2 ],
-                'type' => $meta[ 3 ],
+                'type' => strtolower( $meta[ 3 ] ),
                 'text' => $ln );
             }
           }
