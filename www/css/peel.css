@@ -20,11 +20,20 @@ html, body {
 }
 .logentry {
     font-family: Arial,Helvetica,sans-serif;
-    
+    margin-bottom: 15px;
 }
-.logentry.warning {
+.logentry .datetime,
+.logentry .type {
+    display: inline-block;
+    padding-right: 5px;
+    font-weight: bold;
+}
+.logentry .type {
+    text-transform: uppercase;
+}
+.logentry.warning .type {
     color: #f90;
 }
-.logentry.error {
+.logentry.error .type {
     color: #f00;
 }
