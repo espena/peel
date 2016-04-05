@@ -23,6 +23,7 @@
       return $this->mResponseCode;
     }
     private function curlPreparePlain( $url ) {
+      $url = str_replace( ' ', '%20', $url );
       $sc = $this->mConfig[ 'scraping' ];
       $ch = curl_init();
       $ua = isset( $sc[ 'user_agent' ] ) ? $sc[ 'user_agent' ] : DEFAULT_USER_AGENT_STRING;
