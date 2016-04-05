@@ -40,7 +40,7 @@
             $db->registerUrlDownloaded( $url, $c[ 'peeler' ][ 'name' ], $dest, 'naming_ok' );
           }
           else {
-            $log->error( "Server status %s", $res, basename( $url ) );
+            $log->error( "Server status %s", $res, $url );
           }
         }
       }
