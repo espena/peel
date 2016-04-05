@@ -15,6 +15,7 @@
   */
 
   require_once( DIR_LIB . '/app_base.inc.php' );
+  require_once( DIR_LIB . '/app_login.inc.php' );
   require_once( DIR_LIB . '/app_cli_base.inc.php' );
   require_once( DIR_LIB . '/app_web_base.inc.php' );
   require_once( DIR_LIB . '/app_web_frontend.inc.php' );
@@ -75,14 +76,19 @@
           }
         }
         else {
+          session_start();
           self::$mTheApp = new AppWebBase( self::$mTheApp );
-          if( !empty( $_GET[ 'json' ] ) ) {
+          if( !empty( $_GET[ 'enable' ] ) || !empty( $_GET[ 'disable' ] ) ) {
+            self::$mTheApp = new AppEnabler( self::$mTheApp );
+          }
+          else if( !empty( $_GET[ 'json' ] ) ) {
             self::$mTheApp = new AppAjaxResponse( self::$mTheApp );
           }
           else {
             self::$mTheApp = new AppWebFrontend( self::$mTheApp );
             //self::$mTheApp = new AppDropbox( self::$mTheApp );
           }
+          self::$mTheApp = new AppLogin( self::$mTheApp );
         }
       }
       return self::$mTheApp;
@@ -107,7 +113,7 @@
     }
     public static function getParameters() {
       if( !self::$mParams ) {
-        self::$mParams = getopt( "c:e:d:", array( 'conf:', 'enable:', 'disable:' ) ) or array();
+        self::$mParams = PHP_SAPI == 'cli' ? getopt( "c:e:d:", array( 'conf:', 'enable:', 'disable:' ) ) : $_GET;
       }
       return self::$mParams;
     }
