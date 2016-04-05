@@ -26,6 +26,19 @@
         }
       }
     }
+    public function verifyUser( $username, $password ) {
+      $row = null;
+      $sql = sprintf( "CALL verifyUser('%s','%s')",
+                      $this->mDb->escape_string( $username ),
+                      $this->mDb->escape_string( $password ) );
+      $this->mDb->multi_query( $sql );
+      if( $res = $this->getFirstResult() ) {
+        $row = $res->fetch_assoc();
+        $res->free();
+      }
+      $this->flushResults();
+      return $row;
+    }
     public function registerUrlDownloaded( $url, $peelerName, $renameTo, $status ) {
       $sql = sprintf( "CALL insertMetadata('%s','%s','%s','%s')",
                       $this->mDb->escape_string( $url ),
