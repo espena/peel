@@ -86,8 +86,10 @@
       $this->mBase->run();
       $c = $this->getConfig();
       foreach( $c[ 'peelers' ] as $name => $peelerConf ) {
-        $this->mPeelers[ $name ] = Factory::createPeeler( $peelerConf );
-        $this->mPeelers[ $name ]->start();
+        if( $peelerConf[ 'peeler' ][ 'status' ] == 'enabled' ) {
+          $this->mPeelers[ $name ] = Factory::createPeeler( $peelerConf );
+          $this->mPeelers[ $name ]->start();
+        }
       }
       $log->message( 'Peel engine finished' );
     }
