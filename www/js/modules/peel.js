@@ -22,14 +22,37 @@ define( [
     window.requestAnimationFrame( updateInterval );
   }
 
+  function onClickCtrl( e ) {
+    $( e.target ).parent().addClass( 'pending' );
+    $.ajax( $( e.target ).attr( 'href' ) );
+    e.preventDefault();
+  }
+
   function populatePeelLst( status, lstElements, lstData, lstItemTemplate ) {
     if( status == 'success' ) {
       lstElements.each(
         function( i, e ) {
           $lst = $( e );
-          $lst.html( '' );
           for( var k in lstData ) {
-            $lst.append( mustache.render( lstItemTemplate, lstData[ k ] ) );
+            var
+              entry = lstData[ k ],
+              $entry = $lst.find( '.entry_' + entry.key );
+            if( $entry.length == 0 ) {
+              $lst
+                .prepend( mustache.render( lstItemTemplate, entry ) )
+                .find( '.entry_' + entry.key )
+                .data( 'hash', entry.hash );
+            }
+            else if( $entry.data( 'hash' ) != entry.hash ) {
+              $lst
+                .find( '.entry_' + entry.key )
+                .replaceWith( mustache.render( lstItemTemplate, entry ) );
+              $lst
+                .find( '.entry_' + entry.key )
+                .data( 'hash', entry.hash )
+                .find( '.enabler' )
+                .removeClass( 'pending' );
+            }
           }
         }
       );
@@ -45,14 +68,17 @@ define( [
       updatePeelLog.lock = true;
       $.ajax( {
         url: '?json=peel_log',
-        success: updatePeelLog
+        success: updatePeelLog,
+        cache: false
       } );
     }
   }
 
   function updatePeelCtrl() {
     if( updatePeelCtrl.lock ) {
+      $( '.enabler' ).off( 'click', 'a', onClickCtrl );
       populatePeelLst( arguments[ 1 ], $( '.peel_ctrl' ), arguments[ 0 ], tplCtrlEntry );
+      $( '.enabler' ).on( 'click', 'a', onClickCtrl );
       updatePeelCtrl.lock = false;
     }
     else {
@@ -66,15 +92,16 @@ define( [
 
   function updateInterval( ts ) {
     if( updateStack.ts == 0 ) {
+      console.log( 'UPDATE' );
       updateStack.ts = ts;
-    }
-    if( ( ts - updateStack.ts ) >= updateStack.ms ) {
-      updateStack.ts = 0;
       for( var i = 0; i < updateStack.callbacks.length; i++ ) {
         if( typeof( updateStack.callbacks[ i ] ) == 'function' ) {
           updateStack.callbacks[ i ]();
         }
       }
+    }
+    if( ( ts - updateStack.ts ) >= updateStack.ms ) {
+      updateStack.ts = 0;
     }
     window.requestAnimationFrame( updateInterval );
   }
