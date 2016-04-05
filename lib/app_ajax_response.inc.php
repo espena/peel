@@ -30,6 +30,10 @@
           $log = Factory::getLogger();
           $data = $log->getContent();
           break;
+        case 'peel_ctrl':
+          $conf = Factory::getConfig();
+          $data = array_map( function( $e ) { return $e[ 'peeler' ]; }, $conf[ 'peelers' ] );
+          break;
         default:
           $data = array();
       }
