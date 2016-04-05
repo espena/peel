@@ -1,8 +1,9 @@
 define( [
   'jquery',
   'mustache',
-  'text!../tpl/log_entry.html'
-], function( $, mustache, tplLogEntry ) {
+  'text!../tpl/log_entry.html',
+  'text!../tpl/ctrl_entry.html'
+], function( $, mustache, tplLogEntry, tplCtrlEntry ) {
 
   var
     updateStack = {
@@ -16,25 +17,28 @@ define( [
     };
 
   function initialize() {
-    $( '.peel_log' ).each( initPeelLog );
     updateStack.addCallback( updatePeelLog );
+    updateStack.addCallback( updatePeelCtrl );
     window.requestAnimationFrame( updateInterval );
+  }
+
+  function populatePeelLst( status, lstElements, lstData, lstItemTemplate ) {
+    if( status == 'success' ) {
+      lstElements.each(
+        function( i, e ) {
+          $lst = $( e );
+          $lst.html( '' );
+          for( var k in lstData ) {
+            $lst.append( mustache.render( lstItemTemplate, lstData[ k ] ) );
+          }
+        }
+      );
+    }
   }
 
   function updatePeelLog() {
     if( updatePeelLog.lock ) {
-      if( arguments[ 1 ] == 'success' ) {
-        var logData = arguments[ 0 ];
-        $( '.peel_log' ).each(
-          function( i, e ) {
-            $log = $( e );
-            $log.html( '' );
-            for( var k in logData ) {
-              $log.append( mustache.render( tplLogEntry, logData[ k ] ) );
-            }
-          }
-        );
-      }
+      populatePeelLst( arguments[ 1 ], $( '.peel_log' ), arguments[ 0 ], tplLogEntry );
       updatePeelLog.lock = false;
     }
     else {
@@ -46,8 +50,18 @@ define( [
     }
   }
 
-  function initPeelLog( ts ) {
-    $log = $( arguments[ 1 ] );
+  function updatePeelCtrl() {
+    if( updatePeelCtrl.lock ) {
+      populatePeelLst( arguments[ 1 ], $( '.peel_ctrl' ), arguments[ 0 ], tplCtrlEntry );
+      updatePeelCtrl.lock = false;
+    }
+    else {
+      updatePeelCtrl.lock = true;
+      $.ajax( {
+        url: '?json=peel_ctrl',
+        success: updatePeelCtrl
+      } );
+    }
   }
 
   function updateInterval( ts ) {
