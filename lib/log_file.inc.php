@@ -68,7 +68,7 @@
       $str = call_user_func_array( 'sprintf', $args );
       $ln = sprintf( "%s %s\n", $prefix, $str );
       file_put_contents( $this->mLogFile, $ln, FILE_APPEND );
-      chmod( $this->mLogFile, 0775 );
+      @chmod( $this->mLogFile, 0775 );
       if( !empty( $this->mLogContent ) ) {
         $this->mLogContent[ ] = array( 'hash' => md5( $ln ), 'entry' => $ln );
       }
@@ -83,6 +83,7 @@
             if( $ln = fgets( $fp ) ) {
               if( preg_match( '/^(\\d{4}-\\d{2}-\\d{2}) (\\d{2}:\\d{2}:\\d{2}) - ([^ ]+)[ ]+:\s+([^$]+)$/i', $ln, $meta ) ) {
                 $this->mLogContent[ ] = array( 
+                  'key' => md5( $ln ),
                   'hash' => md5( $ln ),
                   'date' => $meta[ 1 ],
                   'time' => $meta[ 2 ],
