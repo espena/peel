@@ -18,19 +18,24 @@
         self::$mConfigData[ 'config_file_path' ] = $file;
         self::$mConfigData[ 'config_directory' ] = dirname( $file );
         self::createDirectories();
-        self::parseEnabled();
+        self::parsePeelers();
       }
       return self::$mConfigData;
     }
-    private static function parseEnabled() {
+    private static function parsePeelers() {
       self::$mConfigData[ 'peelers' ] = array();
-      $cEnabledDir = sprintf( '%s/%s', self::$mConfigData[ 'config_directory' ], self::$mConfigData[ 'peeler_conf' ][ 'dir_enabled' ] );
-      $filePattern = sprintf( '%s/*.conf', $cEnabledDir );
-      $confEnabled = glob( $filePattern );
-      foreach( $confEnabled as $confFile ) {
+      $aDir = sprintf( '%s/%s', self::$mConfigData[ 'config_directory' ], self::$mConfigData[ 'peeler_conf' ][ 'dir_available' ] );
+      $eDir = sprintf( '%s/%s', self::$mConfigData[ 'config_directory' ], self::$mConfigData[ 'peeler_conf' ][ 'dir_enabled' ] );
+      $fileAvailablePattern = sprintf( '%s/*.conf', $aDir );
+      $confFiles = glob( $fileAvailablePattern );
+      foreach( $confFiles as $confFile ) {
+        $key = strtolower( basename( $confFile, '.conf' ) );
         $c = parse_ini_file( $confFile, true, INI_SCANNER_NORMAL );
         $c[ 'config_file_path' ] = $confFile;
-        self::$mConfigData[ 'peelers' ][ strtolower( basename( $confFile, '.conf' ) ) ] = $c;
+        $c[ 'peeler' ][ 'status' ] = is_link( sprintf( '%s/%s.conf', $eDir, basename( $confFile, '.conf' ) ) ) ? 'enabled' : 'disabled';
+        $c[ 'peeler' ][ 'key' ] = $key;
+        $c[ 'peeler' ][ 'hash' ] = md5( json_encode( $c[ 'peeler' ] ) );
+        self::$mConfigData[ 'peelers' ][ $key ] = $c;
       }
     }
   }
