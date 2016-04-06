@@ -1,7 +1,7 @@
 <?php
 
-  define( 'TEMPLATE_TAG_PATTERN', '/%%([^%]+)%%/' );
-  define( 'TEMPLATE_INC_PATTERN', '/##([^#]+)##/' );
+  define( 'TEMPLATE_TAG_PATTERN', '/%%(.*?)%%/' );
+  define( 'TEMPLATE_INC_PATTERN', '/##(.*?)##/' );
   define( 'TEMPLATE_FUNCTION_PATTERN', '/^([^\\(]+)\\(([^\\)]*)\\)$/' );
 
   class Template {
@@ -18,7 +18,7 @@
       $this->mTplText = file_exists( $tplFile ) ? file_get_contents( $tplFile ) : $idt;
     }
 
-    public function render( $data ) {
+    public function render( $data = array() ) {
       $resolved = array();
       // Expand template includes
       if( preg_match_all( TEMPLATE_INC_PATTERN, $this->mTplText, $m0, PREG_SET_ORDER ) ) {
@@ -46,13 +46,11 @@
                 $functions[ $f ] = ( $p == '' ? array() : array_map( 'trim', explode( ',', $p ) ) );
               }
             }
-            $value = '';
-            if( isset( $data[ $field ] ) ) {
-              $value = $data[ $field ];
-              foreach( $functions as $name => $params ) {
-                if( function_exists( $name ) ) {
-                  $value = call_user_func_array( $name, array_merge( array( $value ), $params ) );
-                }
+            $value = isset( $data[ $field ] ) ? $data[ $field ] : '';
+            foreach( $functions as $name => $params ) {
+              if( function_exists( $name ) ) {
+                $valueArr = empty( $value ) ? array() : array( $value );
+                $value = call_user_func_array( $name, array_merge( $valueArr, $params ) );
               }
             }
             $resolved[ $subject ] = $value;
