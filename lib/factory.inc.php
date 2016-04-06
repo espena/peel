@@ -68,7 +68,11 @@
         if( PHP_SAPI == 'cli' ) {
           self::$mTheApp = new AppCliBase( self::$mTheApp );
           $p = self::getParameters();
-          if( isset( $p[ 'e' ] ) || isset( $p[ 'enable' ] ) || isset( $p[ 'd' ] ) || isset( $p[ 'disable' ] ) ) {
+          if( isset( $p[ 'e' ] ) || isset( $p[ 'enable' ] ) ||
+              isset( $p[ 'd' ] ) || isset( $p[ 'disable' ] ) ||
+              isset( $p[ 'x' ] ) || isset( $p[ 'execute' ] ) ||
+              isset( $p[ 'r' ] ) || isset( $p[ 'reset' ] ) )
+          {
             self::$mTheApp = new AppEnabler( self::$mTheApp );
           }
           else {
@@ -78,7 +82,11 @@
         else {
           session_start();
           self::$mTheApp = new AppWebBase( self::$mTheApp );
-          if( !empty( $_GET[ 'enable' ] ) || !empty( $_GET[ 'disable' ] ) ) {
+          if( !empty( $_GET[ 'enable' ] ) ||
+              !empty( $_GET[ 'disable' ] ) ||
+              !empty( $_GET[ 'execute' ] ) ||
+              !empty( $_GET[ 'reset' ] ) )
+          {
             self::$mTheApp = new AppEnabler( self::$mTheApp );
           }
           else if( !empty( $_GET[ 'json' ] ) ) {
@@ -113,7 +121,7 @@
     }
     public static function getParameters() {
       if( !self::$mParams ) {
-        self::$mParams = PHP_SAPI == 'cli' ? getopt( "c:e:d:", array( 'conf:', 'enable:', 'disable:' ) ) : $_GET;
+        self::$mParams = PHP_SAPI == 'cli' ? getopt( "c:e:d:r:", array( 'conf:', 'enable:', 'disable:', 'reset:' ) ) : $_GET;
       }
       return self::$mParams;
     }
