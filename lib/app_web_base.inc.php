@@ -71,8 +71,15 @@
     * @return void
     */
     public function run() {
-      $this->mBase->run();
-      $this->tpl( 'main' );
+      if( isset( $_GET[ 'clear_log' ] ) ) {
+        Factory::getLogger()->clear();
+        header( 'Location: /' );
+        exit();
+      }
+      else {
+        $this->mBase->run();
+        $this->tpl( 'main' );
+      }
     }
 
    /**
