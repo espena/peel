@@ -98,5 +98,9 @@
       }
       return $this->mLogContent;
     }
+    public function clear() {
+      @unlink( $this->mLogFile );
+      $this->mLogContent = array();
+    }
   }
 ?>
