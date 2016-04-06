@@ -15,6 +15,7 @@
   */
   require_once( DIR_LIB . '/i_peeler.inc.php' );
   require_once( DIR_LIB . '/factory.inc.php' );
+  require_once( DIR_LIB . '/template.inc.php' );
  /**
   * Basic peeler class.
   *
@@ -66,8 +67,10 @@
     * @return void.
     */
     public function start() {
-      $this->mScraper->get( $this->mConfig[ 'peeler' ][ 'url_start_page' ] );
-      $this->mRawData[ 'url_source' ] = $this->mConfig[ 'peeler' ][ 'url_start_page' ];
+      $urlTemplate = new Template( $this->mConfig[ 'peeler' ][ 'url_start_page' ] );
+      $urlSource = $urlTemplate->render();
+      $this->mScraper->get( $urlSource );
+      $this->mRawData[ 'url_source' ] = $urlSource;
       $this->mRawData[ 'start_page' ] = $this->mScraper->getResponseData();
     }
 
