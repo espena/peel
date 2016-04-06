@@ -54,14 +54,15 @@
     private function getDestinationDir() {
       $c = $this->getConfig();
       $dir = $c[ 'peeler' ][ 'download_to' ];
-      if( !file_exists( $dir ) ) {
+      if( !file_exists( $dir ) || !is_link( $dir ) ) {
         $log = Factory::getLogger();
         $log->warning( "Directory %s does not exist", $dir );
-        if( mkdir( $dir, 0777, true ) ) {
+        try {
+          mkdir( $dir, 0777, true );
           $log->message( "Destination directory successfully created" );
         }
-        else {
-          $log->error( "Could not create destination directory" );
+        catch( Exception $ex ) {
+          $log->error( $ex->getMessage() );
           $dir = FALSE;
         }
       }
