@@ -110,6 +110,24 @@
       }
     }
 
+    private function runPeeler( $peelerToRun ) {
+      if( empty( $peelerToRun ) ) return;
+      $c = $this->getConfig();
+      foreach( $c[ 'peelers' ] as $peelerConf ) {
+        if( $peelerConf[ 'peeler' ][ 'key' ] == $peelerToRun ) {
+          $peeler = Factory::createPeeler( $peelerConf );
+          $peeler->start();
+        }
+      }
+    }
+
+    private function resetPeeler( $peelerToReset ) {
+      if( empty( $peelerToReset ) ) return;
+      $db = Factory::getDatabase();
+      $db->resetPeeler( $peelerToReset );
+      Factory::getLogger()->message( "Peeler %s has been reset", $peelerToReset );
+    }
+
    /**
     * Get configuration array.
     *
@@ -135,10 +153,14 @@
       $p = Factory::getParameters();
       $peelerToEnable = isset( $p[ 'e' ] ) ? $p[ 'e' ] : ( isset( $p[ 'enable' ] ) ? $p[ 'enable' ] : '' );
       $peelerToDisable = isset( $p[ 'd' ] ) ? $p[ 'd' ] : ( isset( $p[ 'disable' ] ) ? $p[ 'disable' ] : '' );
+      $peelerToReset = isset( $p[ 'r' ] ) ? $p[ 'r' ] : ( isset( $p[ 'reset' ] ) ? $p[ 'reset' ] : '' );
+      $peelerToRun = isset( $p[ 'x' ] ) ? $p[ 'x' ] : ( isset( $p[ 'execute' ] ) ? $p[ 'execute' ] : '' );
       $this->mPathPeelersAvailable = $this->resolvePath( $c, 'dir_available' );
       $this->mPathPeelersEnabled = $this->resolvePath( $c, 'dir_enabled' );
       $this->enablePeeler( $peelerToEnable );
       $this->disablePeeler( $peelerToDisable );
+      $this->resetPeeler( $peelerToReset );
+      $this->runPeeler( $peelerToRun );
     }
 
    /**
