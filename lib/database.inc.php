@@ -6,8 +6,8 @@
     private $mDb;
     public function __construct( $config ) {
       $this->mConfig = $config;
-      if( isset( $this->mConfig[ 'mysql' ] ) ) {
-        $c = $this->mConfig[ 'mysql' ];
+      if( isset( $this->mConfig[ 'database' ] ) ) {
+        $c = $this->mConfig[ 'database' ];
         try {
           $this->mDb =
             new MySQLi(
@@ -16,7 +16,7 @@
               $c[ 'password' ],
               '',
               isset( $c[ 'port' ] ) ? $c[ 'port' ] : '3306' );
-          if( !$this->mDb->select_db( $c[ 'database' ] ) ) {
+          if( !$this->mDb->select_db( $c[ 'database_name' ] ) ) {
             $this->createDb();
           }
         }
@@ -39,10 +39,11 @@
       $this->flushResults();
       return $row;
     }
-    public function registerUrlDownloaded( $url, $peelerName, $renameTo, $status ) {
-      $sql = sprintf( "CALL insertMetadata('%s','%s','%s','%s')",
+    public function registerUrlDownloaded( $url, $peelerName, $peelerKey, $renameTo, $status ) {
+      $sql = sprintf( "CALL insertMetadata('%s','%s','%s','%s','%s')",
                       $this->mDb->escape_string( $url ),
                       $this->mDb->escape_string( $peelerName ),
+                      $this->mDb->escape_string( $peelerKey ),
                       $this->mDb->escape_string( $renameTo ),
                       $this->mDb->escape_string( $status ) );
       $this->mDb->multi_query( $sql );
@@ -61,9 +62,29 @@
       $this->flushResults();
       return $n > 0;
     }
+    public function resetPeeler( $peelerToReset ) {
+      $sql = sprintf( "CALL resetPeeler('%s')",
+                      $this->mDb->escape_string( $peelerToReset ) );
+      $this->mDb->multi_query( $sql );
+      $this->flushResults();
+    }
+    public function getPeelerInfoStatus( $peelerKey ) {
+      $sql = sprintf( "CALL getPeelerInfoStatus('%s')",
+                      $this->mDb->escape_string( $peelerKey ) );
+      $this->mDb->multi_query( $sql );
+      if( $res = $this->getFirstResult() ) {
+        $row = $res->fetch_assoc();
+      }
+      else {
+        $row = array();
+      }
+      $this->flushResults();
+      return $row;
+    }
     private function createDb() {
       $tpl = new Template( DIR_BASE . '/db/create.tpl.sql' );
-      $this->mDb->multi_query( $tpl->render( $this->mConfig[ 'mysql' ] ) );
+      $sql = $tpl->render( $this->mConfig[ 'database' ] );
+      $this->mDb->multi_query( $sql );
       $this->flushResults();
     }
     private function getFirstResult() {
