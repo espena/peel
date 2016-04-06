@@ -24,7 +24,7 @@ define( [
 
   function onClickCtrl( e ) {
     $( e.target ).parent().addClass( 'pending' );
-    $.ajax( $( e.target ).attr( 'href' ) );
+    $.ajax( { url: $( e.target ).attr( 'href' ), async: true } );
     e.preventDefault();
   }
 
@@ -33,9 +33,9 @@ define( [
       lstElements.each(
         function( i, e ) {
           $lst = $( e );
-          for( var k in lstData ) {
+          for( var i = 0; i < lstData.length; i++ ) {
             var
-              entry = lstData[ k ],
+              entry = lstData[ i ],
               $entry = $lst.find( '.entry_' + entry.key );
             if( $entry.length == 0 ) {
               $lst
