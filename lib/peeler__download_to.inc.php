@@ -32,12 +32,18 @@
         $url = $sourceInfo[ 'url' ];
         $log->message( "Found %s", basename( $url ) );
         $scraper->get( $url );
+        sleep( 1.0 );
         $res = $scraper->getResponseCode();
         if( $dest = $this->resolveDestinationPath( $dir, $sourceInfo ) ) {
           if( $res == 200 ) {
             $log->message( "Writing %s", $dest );
-            file_put_contents( $dest, $scraper->getResponseData() );
-            $db->registerUrlDownloaded( $url, $c[ 'peeler' ][ 'name' ], $dest, 'naming_ok' );
+            try {
+              file_put_contents( $dest, $scraper->getResponseData() );
+              $db->registerUrlDownloaded( $url, $c[ 'peeler' ][ 'name' ], $c[ 'peeler' ][ 'key' ], $dest, 'naming_ok' );
+            }
+            catch( Exception $ex ) {
+              $log->error( $ex->getMessage() );
+            }
           }
           else {
             $log->error( "Server status %s", $res, $url );
