@@ -10,7 +10,7 @@
   <![endif]-->
 </head>
 <body>
-  <section class="login"> 
+  <section class="login nicebox">
     <h1>Peel login</h1>
     <form method="POST" action=".">
       <div><label for="u">Brukernavn</label><input type="text" id="u" name="u" /></div>
