@@ -54,6 +54,9 @@
     private function getDestinationDir() {
       $c = $this->getConfig();
       $dir = $c[ 'peeler' ][ 'download_to' ];
+      if( substr( $dir, 0, 1 ) != '/' ) {
+        $dir = sprintf( '%s/%s', DIR_BASE, $dir );
+      }
       if( !file_exists( $dir ) || !is_link( $dir ) ) {
         $log = Factory::getLogger();
         $log->warning( "Directory %s does not exist", $dir );
