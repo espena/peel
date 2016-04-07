@@ -64,7 +64,7 @@
       }
       catch( Exception $ex ) {
         $msg = $ex->getMessage();
-        if( strpos( $msg, 'file exists' ) === false ) {
+        if( strpos( $msg, 'File exists' ) === false ) {
           $log->error( "%s", $msg );
           $dir = FALSE;
         }
