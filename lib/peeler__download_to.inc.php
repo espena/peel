@@ -65,11 +65,11 @@
       catch( Exception $ex ) {
         $msg = $ex->getMessage();
         if( strpos( $msg, 'file exists' ) === false ) {
-          $log->error( "%s (%s)", $ex->getMessage() );
+          $log->error( "%s", $msg );
           $dir = FALSE;
         }
         else {
-          $log->message( $ex->getMessage() );
+          $log->message( $msg );
         }
       }
       return $dir;
