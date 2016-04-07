@@ -36,12 +36,13 @@ define( [
           for( var i = 0; i < lstData.length; i++ ) {
             var
               entry = lstData[ i ],
-              $entry = $lst.find( '.entry_' + entry.key );
+              $entry = $lst.find( '.entry_' + entry.key ).css( 'z-index', 0 );
             if( $entry.length == 0 ) {
               $lst
                 .append( mustache.render( lstItemTemplate, entry ) )
                 .find( '.entry_' + entry.key )
                 .insertBefore( $lst.find( '.lstEntry:first' ) )
+                .css( 'z.index', i )
                 .data( 'hash', entry.hash );
             }
             else if( $entry.data( 'hash' ) != entry.hash ) {
