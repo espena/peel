@@ -26,10 +26,10 @@
         }
       }
     }
-    public function log( $level, $message ) {
+    public function log( $message, $level ) {
       $sql = sprintf( "CALL log('%s','%s')",
-                      $this->mDb->escape_string( $level ),
-                      $this->mDb->escape_string( $message ) );
+                      $this->mDb->escape_string( $message ),
+                      $this->mDb->escape_string( $level ) );
       $this->mDb->multi_query( $sql );
       $this->flushResults();
     }

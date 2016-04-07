@@ -65,14 +65,14 @@
       }
     }
     private function write( $prefix, $level, $args ) {
-      $str = call_user_func_array( 'sprintf', $args );
-      $ln = sprintf( "%s %s\n", $prefix, $str );
+      $message = call_user_func_array( 'sprintf', $args );
+      $ln = sprintf( "%s %s\n", $prefix, $message );
       file_put_contents( $this->mLogFile, $ln, FILE_APPEND );
       @chmod( $this->mLogFile, 0775 );
       if( !empty( $this->mLogContent ) ) {
         $this->mLogContent[ ] = array( 'hash' => md5( $ln ), 'entry' => $ln );
       }
-      Factory::getDatabase()->log( $level, $str );
+      Factory::getDatabase()->log( $message, $level );
       $this->purge();
     }
     public function getContent() {
