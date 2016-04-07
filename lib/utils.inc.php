@@ -67,7 +67,7 @@
     *
     * @return bool TRUE if directory exists, otherwise false.
     */
-    public static function my_is_dir ( $path )
+    public static function is_dir ( $path )
     { 
       return ( (fileperms( "$path" ) & 0x4000 ) == 0x4000 );
     }
