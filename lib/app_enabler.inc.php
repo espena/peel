@@ -79,7 +79,7 @@
       $path = sprintf( '%s/%s.conf', $this->mPathPeelersEnabled, $peelerToDisable );
       if( file_exists( $path ) ) {
         if( unlink( $path ) ) {
-          Factory::getLogger()->message( "Peeler %s successfully disabled", $peelerToDisable );
+          Factory::getLogger()->message( "Peeler %s successfully disabled by %s", $peelerToDisable, $_SESSION[ 'login' ][ 'full_name' ] );
         }
         else {
           Factory::getLogger()->error( "Unable to deacitvate peeler %s", $peelerToDisable );
@@ -102,7 +102,7 @@
       $destin = sprintf( '%s/%s.conf', $this->mPathPeelersEnabled, $peelerToEnable );
       if( !file_exists( $destin ) && file_exists( $source ) ) {
         if( symlink( $source, $destin ) ) {
-          Factory::getLogger()->message( "Peeler %s successfully enabled", $peelerToEnable );
+          Factory::getLogger()->message( "Peeler %s successfully enabled by %s", $peelerToEnable, $_SESSION[ 'login' ][ 'full_name' ] );
         }
         else {
           Factory::getLogger()->error( "Unable to acitvate peeler %s", $peelerToEnable );
@@ -125,7 +125,7 @@
       if( empty( $peelerToReset ) ) return;
       $db = Factory::getDatabase();
       $db->resetPeeler( $peelerToReset );
-      Factory::getLogger()->message( "Peeler %s has been reset", $peelerToReset );
+      Factory::getLogger()->message( "Peeler %s has been reset by %s", $peelerToReset, $_SESSION[ 'login' ][ 'full_name' ] );
     }
 
    /**
