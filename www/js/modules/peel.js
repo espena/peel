@@ -39,8 +39,9 @@ define( [
               $entry = $lst.find( '.entry_' + entry.key );
             if( $entry.length == 0 ) {
               $lst
-                .prepend( mustache.render( lstItemTemplate, entry ) )
+                .append( mustache.render( lstItemTemplate, entry ) )
                 .find( '.entry_' + entry.key )
+                .insertBefore( $lst.find( '.lstEntry:first' ) )
                 .data( 'hash', entry.hash );
             }
             else if( $entry.data( 'hash' ) != entry.hash ) {
