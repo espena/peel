@@ -57,7 +57,7 @@
       if( substr( $dir, 0, 1 ) != '/' ) {
         $dir = sprintf( '%s/%s', DIR_BASE, $dir );
       }
-      if( !my_is_dir( $dir ) || !is_link( $dir ) ) {
+      if( !Utils::is_dir( $dir ) || !is_link( $dir ) ) {
         $log = Factory::getLogger();
         $log->warning( "Directory %s does not exist", $dir );
         try {
@@ -73,10 +73,6 @@
     }
     public function resolveDestinationPath( $dir, $sourceInfo ) {
       return $this->mPeeler->resolveDestinationPath( $dir, $sourceInfo );
-    }
-    function my_is_dir ( $path )
-    { 
-      return ( (fileperms( "$path" ) & 0x4000 ) == 0x4000 );
     }
   }
 ?>

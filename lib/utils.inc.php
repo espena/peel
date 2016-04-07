@@ -61,6 +61,18 @@
     }
 
    /**
+    * Better version of the is_dir function in PHP.
+    *
+    * @param string $path The path to the directory to test for existence.
+    *
+    * @return bool TRUE if directory exists, otherwise false.
+    */
+    public static function my_is_dir ( $path )
+    { 
+      return ( (fileperms( "$path" ) & 0x4000 ) == 0x4000 );
+    }
+
+   /**
     * Transforms a relative URL to fully qualifying URL.
     *
     * @param string $rel The relative URL to be transformed.
