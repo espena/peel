@@ -59,6 +59,7 @@
       }
 
 
+      $log = Factory::getLogger();
       try {
         mkdir( $dir, 0777, true );
         $log->message( "Destination directory successfully created" );
