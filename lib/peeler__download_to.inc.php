@@ -57,6 +57,18 @@
       if( substr( $dir, 0, 1 ) != '/' ) {
         $dir = sprintf( '%s/%s', DIR_BASE, $dir );
       }
+
+
+      try {
+        mkdir( $dir, 0777, true );
+        $log->message( "Destination directory successfully created" );
+      }
+      catch( Exception $ex ) {
+        $log->error( "%s (%s)", $ex->getMessage(), $ex->getCode() );
+        $dir = FALSE;
+      }
+
+      /*
       if( !file_exists( $dir ) || !is_link( $dir ) ) {
         $log = Factory::getLogger();
         $log->warning( "Directory %s does not exist", $dir );
@@ -69,6 +81,8 @@
           $dir = FALSE;
         }
       }
+      */
+
       return $dir;
     }
     public function resolveDestinationPath( $dir, $sourceInfo ) {
