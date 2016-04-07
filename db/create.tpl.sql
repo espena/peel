@@ -23,6 +23,26 @@ CREATE TABLE user (
         UNIQUE INDEX idx_username ( username )
     );
 
+CREATE TABLE logentry (
+        id_logentry MEDIUMINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+        message VARCHAR( 255 ),
+        level ENUM( 'error', 'warning', 'message' ),
+        logtime TIMESTAMP
+    );
+
+CREATE PROCEDURE log(
+    _message VARCHAR(255),
+    _level ENUM( 'error', 'warning', 'message' ) )
+BEGIN
+    INSERT INTO
+        logentry (
+            message,
+            level )
+    VALUES (
+        _message,
+        _level );
+END;
+
 CREATE PROCEDURE insertUser( _full_name VARCHAR(100),
                              _username VARCHAR(50),
                              _password VARCHAR(255) )
