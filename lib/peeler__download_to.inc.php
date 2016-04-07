@@ -61,6 +61,7 @@
         $log = Factory::getLogger();
         $log->warning( "Directory %s does not exist", $dir );
         try {
+          umask( 0777 );
           mkdir( $dir, 0777, true );
           $log->message( "Destination directory successfully created" );
         }
