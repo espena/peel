@@ -37,13 +37,13 @@
       return sprintf( "%s - %s:", $now, str_pad( $level, 10, ' ', STR_PAD_RIGHT ) );
     }
     public function message( $fmt /* printf-style args list */ ) {
-      $this->write( $this->getPrefix( 'MESSAGE' ), func_get_args() );
+      $this->write( $this->getPrefix( 'MESSAGE' ), 'message', func_get_args() );
     }
     public function warning( $fmt /* printf-style args list */ ) {
-      $this->write( $this->getPrefix( 'WARNING' ), func_get_args() );
+      $this->write( $this->getPrefix( 'WARNING' ), 'warning', func_get_args() );
     }
     public function error( $fmt /* printf-style args list */ ) {
-      $this->write( $this->getPrefix( 'ERROR' ), func_get_args() );
+      $this->write( $this->getPrefix( 'ERROR' ), 'error', func_get_args() );
     }
     private function purge() {
       $size = filesize( $this->mLogFile );
@@ -64,7 +64,7 @@
         fclose( $fh );
       }
     }
-    private function write( $prefix, $args ) {
+    private function write( $prefix, $level, $args ) {
       $str = call_user_func_array( 'sprintf', $args );
       $ln = sprintf( "%s %s\n", $prefix, $str );
       file_put_contents( $this->mLogFile, $ln, FILE_APPEND );
@@ -72,6 +72,7 @@
       if( !empty( $this->mLogContent ) ) {
         $this->mLogContent[ ] = array( 'hash' => md5( $ln ), 'entry' => $ln );
       }
+      Factory::getDatabase()->log( $level, $str );
       $this->purge();
     }
     public function getContent() {

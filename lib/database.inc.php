@@ -26,6 +26,13 @@
         }
       }
     }
+    public function log( $message, $level ) {
+      $sql = sprintf( "CALL log('%s','%s')",
+                      $this->mDb->escape_string( $message ),
+                      $this->mDb->escape_string( $level ) );
+      $this->mDb->multi_query( $sql );
+      $this->flushResults();
+    }
     public function verifyUser( $username, $password ) {
       $row = null;
       $sql = sprintf( "CALL verifyUser('%s','%s')",
