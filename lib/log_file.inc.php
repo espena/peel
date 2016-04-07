@@ -93,7 +93,6 @@
             }
           }
           fclose( $fp );
-          $this->mLogContent = array_reverse( $this->mLogContent );
         }
       }
       return $this->mLogContent;
