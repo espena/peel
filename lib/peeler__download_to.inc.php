@@ -57,7 +57,7 @@
       if( substr( $dir, 0, 1 ) != '/' ) {
         $dir = sprintf( '%s/%s', DIR_BASE, $dir );
       }
-      if( !Utils::is_dir( $dir ) || !is_link( $dir ) ) {
+      if( !Utils::is_dir( realpath( $dir ) ) || !is_link( $dir ) ) {
         $log = Factory::getLogger();
         $log->warning( "Directory %s does not exist", $dir );
         try {
