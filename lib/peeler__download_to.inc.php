@@ -57,10 +57,7 @@
       if( substr( $dir, 0, 1 ) != '/' ) {
         $dir = sprintf( '%s/%s', DIR_BASE, $dir );
       }
-
       $log = Factory::getLogger();
-      $log->warning( "Directory %s does not exist", $dir );
-
       try {
         mkdir( $dir, 0777, true );
         $log->message( "Destination directory successfully created" );
@@ -70,6 +67,9 @@
         if( strpos( $msg, 'file exists' ) === false ) {
           $log->error( "%s (%s)", $ex->getMessage() );
           $dir = FALSE;
+        }
+        else {
+          $log->message( $ex->getMessage() );
         }
       }
       return $dir;
