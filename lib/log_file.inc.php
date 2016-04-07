@@ -68,7 +68,9 @@
       $message = call_user_func_array( 'sprintf', $args );
       $ln = sprintf( "%s %s\n", $prefix, $message );
       file_put_contents( $this->mLogFile, $ln, FILE_APPEND );
-      @chmod( $this->mLogFile, 0775 );
+      $umask = umask( 0777 );
+      @chmod( $this->mLogFile, 0777 );
+      umask( $umask );
       if( !empty( $this->mLogContent ) ) {
         $this->mLogContent[ ] = array( 'hash' => md5( $ln ), 'entry' => $ln );
       }
