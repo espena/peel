@@ -4,25 +4,24 @@
   require_once( DIR_LIB . '/utils.inc.php' );
   class Peeler_inHref implements IPeeler {
     private $mPeeler;
-    private $mData;
     public function __construct( $peeler ) {
       $this->mPeeler = $peeler;
-      $this->mData = array();
     }
     public function start() {
       $this->mPeeler->start();
-      $data = $this->mPeeler->getData();
-      if( preg_match_all( '/href=["\']([^"\']+\.pdf)["\']/', $data, $matches, PREG_SET_ORDER ) ) {
-        $base = $this->mPeeler->getData( 'url_source' );
+      $data = &$this->mPeeler->getData();
+      $data[ 'sourceInfo' ] = array();
+      if( preg_match_all( '/<a[^>]*?href=["\']([^"\']+\.pdf)["\'][^>]*>([^<]*)</', $data[ 'start_page' ], $matches, PREG_SET_ORDER ) ) {
+        $base = $data[ 'url_source' ];
         foreach( $matches as $m ) {
-          $this->mData[] = array( 'url' => Utils::rel2abs( $m[ 1 ], $base ) );
+          $data[ 'sourceInfo' ][ ] = array( 'url' => Utils::rel2abs( $m[ 1 ], $base ), 'linktext' => trim( $m[ 2 ] ) );
         }
       }
     }
-    public function getData( $key = '' ) {
-      return $this->mData;
+    public function &getData() {
+      return $this->mPeeler->getData();
     }
-    public function getConfig() {
+    public function &getConfig() {
       return $this->mPeeler->getConfig();
     }
     public function resolveDestinationPath( $dir, $sourceInfo ) {

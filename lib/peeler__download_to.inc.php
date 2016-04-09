@@ -16,19 +16,19 @@
         $this->download( $dir );
       }
     }
-    public function getData( $key = '' ) {
-      return $this->mData;
+    public function &getData() {
+      return $mPeeler->getData();
     }
-    public function getConfig() {
+    public function &getConfig() {
       return $this->mPeeler->getConfig();
     }
     private function download( $dir ) {
       $c = $this->getConfig();
       $db = Factory::getDatabase();
       $log = Factory::getLogger();
-      $data = $this->mPeeler->getData();
+      $data = &$this->mPeeler->getData();
       $scraper = Factory::createScraper();
-      foreach( $data as $sourceInfo ) {
+      foreach( $data[ 'sourceInfo' ] as $sourceInfo ) {
         $url = $sourceInfo[ 'url' ];
         $log->message( "Found %s", basename( $url ) );
         $scraper->get( $url );

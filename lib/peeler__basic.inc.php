@@ -67,6 +67,7 @@
     * @return void.
     */
     public function start() {
+
       $urlTemplate = new Template( $this->mConfig[ 'peeler' ][ 'url_start_page' ] );
       $urlSource = $urlTemplate->render();
       $this->mScraper->get( $urlSource );
@@ -79,15 +80,15 @@
     * @param $key which data field to retrieve.
     * @return string The data (usually HTML) from the start page.
     */
-    public function getData( $key = 'start_page' ) {
-      return $this->mRawData[ $key ];
+    public function &getData() {
+      return $this->mRawData;
     }
 
    /**
     * Retrieve peeler configuration.
     * @return array The contents of the configuration file for current peeler.
     */
-    public function getConfig() {
+    public function &getConfig() {
       return $this->mConfig;
     }
 

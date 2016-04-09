@@ -4,16 +4,14 @@
   require_once( DIR_LIB . '/utils.inc.php' );
   class Peeler_urlMetadata implements IPeeler {
     private $mPeeler;
-    private $mData;
     public function __construct( $peeler ) {
       $this->mPeeler = $peeler;
-      $this->mData = array();
     }
     public function start() {
       $this->mPeeler->start();
-      $this->mData = $this->mPeeler->getData();
+      $data = &$this->mPeeler->getData();
       $c = $this->getConfig();
-      foreach( $this->mData as &$sourceInfo ) {
+      foreach( $data[ 'sourceInfo' ] as &$sourceInfo ) {
         if( preg_match( '/' . $c[ 'peeler' ][ 'url_metadata' ] . '/', $sourceInfo[ 'url' ], $m ) == 1 ) {
           $sourceInfo[ 'metadata' ] = Utils::purgeNumericSubscripts( $m );
         }
@@ -23,10 +21,10 @@
         }
       }
     }
-    public function getData( $key = '' ) {
-      return $this->mData;
+    public function &getData() {
+      return $this->mPeeler->getData();
     }
-    public function getConfig() {
+    public function &getConfig() {
       return $this->mPeeler->getConfig();
     }
     public function resolveDestinationPath( $dir, $sourceInfo ) {

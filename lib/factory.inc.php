@@ -25,10 +25,12 @@
   require_once( DIR_LIB . '/app_ajax_response.inc.php' );
   require_once( DIR_LIB . '/peeler__basic.inc.php' );
   require_once( DIR_LIB . '/peeler__in_href.inc.php' );
+  require_once( DIR_LIB . '/peeler__linktext_metadata.inc.php' );
   require_once( DIR_LIB . '/peeler__url_metadata.inc.php' );
   require_once( DIR_LIB . '/peeler__rename_to.inc.php' );
   require_once( DIR_LIB . '/peeler__unique_by.inc.php' );
   require_once( DIR_LIB . '/peeler__download_to.inc.php' );
+  require_once( DIR_LIB . '/peeler__date_iterator.inc.php' );
   require_once( DIR_LIB . '/database.inc.php' );
   require_once( DIR_LIB . '/scraper.inc.php' );
   require_once( DIR_LIB . '/configuration_file.inc.php' );
@@ -48,6 +50,9 @@
       if( !empty( $conf[ 'peeler' ][ 'url_metadata' ] ) ) {
         $peeler = new Peeler_urlMetadata( $peeler );
       }
+      if( !empty( $conf[ 'peeler' ][ 'linktext_metadata' ] ) ) {
+        $peeler = new Peeler_linktextMetadata( $peeler );
+      }
       if( !empty( $conf[ 'peeler' ][ 'rename_to' ] ) ) {
         $peeler = new Peeler_renameTo( $peeler );
       }
@@ -56,6 +61,9 @@
       }
       if( !empty( $conf[ 'peeler' ][ 'download_to' ] ) ) {
         $peeler = new Peeler_downloadTo( $peeler );
+      }
+      if( !empty( $conf[ 'peeler' ][ 'date_iteration_interval' ] ) ) {
+        $peeler = new Peeler_dateIterator( $peeler );
       }
       return $peeler;
     }

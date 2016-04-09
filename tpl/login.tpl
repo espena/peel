@@ -18,5 +18,11 @@
       <div><input type="submit" value="Log in" /></div>
     </form>
   </section>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.js"></script>
+  <script>
+    $( document ).ready( function() {
+      $( '#u' ).focus();;
+    } )
+  </script>
 </body>
 </html>

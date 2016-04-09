@@ -30,10 +30,10 @@
       }
       return $res;
     }
-    public function getData( $key = '' ) {
-      return $this->mPeeler->getData( $key );
+    public function &getData() {
+      return $this->mPeeler->getData();
     }
-    public function getConfig() {
+    public function &getConfig() {
       return $this->mPeeler->getConfig();
     }
   }

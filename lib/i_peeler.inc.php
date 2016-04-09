@@ -22,7 +22,7 @@
    /**
     * Retrieve peeler data.
     */
-    public function getData( $key = '' );
+    public function getData();
 
    /**
     * Retrieve peeler configuration.
