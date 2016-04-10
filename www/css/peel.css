@@ -11,6 +11,11 @@ html, body {
     -webkit-box-shadow: 0 0 3px #ccc;
     box-shadow: 0 0 3px #ccc;
 }
+.nicebox.active {
+    -moz-box-shadow: 0 0 6px #f00;
+    -webkit-box-shadow: 0 0 6px #f00;
+    box-shadow: 0 0 6px #f00;
+}
 .login {
     width: 440px;
     position: relative;

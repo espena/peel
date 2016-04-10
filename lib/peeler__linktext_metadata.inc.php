@@ -11,13 +11,14 @@
       $this->mPeeler->start();
       $data = &$this->mPeeler->getData();
       $c = $this->getConfig();
-      foreach( $data[ 'sourceInfo' ] as &$sourceInfo ) {
+      foreach( $data[ 'sourceInfo' ] as $k => &$sourceInfo ) {
         if( preg_match( '/' . $c[ 'peeler' ][ 'linktext_metadata' ] . '/', $sourceInfo[ 'linktext' ], $m ) == 1 ) {
           $sourceInfo[ 'metadata' ] = Utils::purgeNumericSubscripts( $m );
         }
         else {
           $log = Factory::getLogger();
-          $log->error( "Missing or unexpected information in url: %s", $sourceInfo[ 'url' ] );
+          $log->warning( "Missing or unexpected information in link text: %s (%s)", $sourceInfo[ 'linktext' ], $sourceInfo[ 'url' ] );
+          unset( $data[ 'sourceInfo' ][ $k ] );
         }
       }
     }

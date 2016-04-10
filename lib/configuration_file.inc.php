@@ -35,7 +35,10 @@
         $c[ 'peeler' ][ 'status' ] = is_link( sprintf( '%s/%s.conf', $eDir, basename( $confFile, '.conf' ) ) ) ? 'enabled' : 'disabled';
         $c[ 'peeler' ][ 'key' ] = $key;
         $c[ 'peeler' ] = array_merge( $c[ 'peeler' ], Factory::getDatabase()->getPeelerInfoStatus( $key ) );
+        $tmp = $c[ 'peeler' ][ 'data_timestamp' ];
+        unset( $c[ 'peeler' ][ 'data_timestamp' ] );
         $c[ 'peeler' ][ 'hash' ] = md5( json_encode( $c[ 'peeler' ] ) );
+        $c[ 'peeler' ][ 'data_timestamp' ] = $tmp;
         self::$mConfigData[ 'peelers' ][] = $c;
       }
     }

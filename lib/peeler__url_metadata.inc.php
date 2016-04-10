@@ -17,7 +17,8 @@
         }
         else {
           $log = Factory::getLogger();
-          $log->error( "Missing or unexpected information in url: %s", $sourceInfo[ 'url' ] );
+          $log->warning( "Missing or unexpected information in url: %s (%s)", $sourceInfo[ 'url' ], $sourceInfo[ 'linktext' ] );
+          unset( $data[ 'sourceInfo' ][ $k ] );
         }
       }
     }

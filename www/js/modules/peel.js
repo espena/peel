@@ -46,8 +46,15 @@ define( [
                 .find( '.entry_' + entry.key )
                 .replaceWith( mustache.render( lstItemTemplate, entry ) );
               $lst
-                .find( '.entry_' + entry.key + ' .enabler' )
+                .find( '.entry_' + entry.key )
+                .addClass( 'active' )
+                .find( '.enabler' )
                 .removeClass( 'pending' );
+            }
+            else {
+              $lst
+                .find( '.entry_' + entry.key )
+                .removeClass( 'active' );
             }
             if( newEntries.length > 0 ) {
               $lst.prepend( newEntries )

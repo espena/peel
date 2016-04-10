@@ -11,11 +11,16 @@
       $this->mPeeler->start();
       $data = &$this->mPeeler->getData();
       $data[ 'sourceInfo' ] = array();
-      if( preg_match_all( '/<a[^>]*?href=["\']([^"\']+\.pdf)["\'][^>]*>([^<]*)</', $data[ 'start_page' ], $matches, PREG_SET_ORDER ) ) {
+      $conf = $this->getConfig();
+      $pattern = sprintf( '/<a[^>]*?href=["\']([^"\']*?%s[^"\']*?)["\'][^>]*>([^<]*)</', $conf[ 'peeler' ][ 'in_href' ] );
+      if( preg_match_all( $pattern, $data[ 'start_page' ], $matches, PREG_SET_ORDER ) ) {
         $base = $data[ 'url_source' ];
         foreach( $matches as $m ) {
           $data[ 'sourceInfo' ][ ] = array( 'url' => Utils::rel2abs( $m[ 1 ], $base ), 'linktext' => trim( $m[ 2 ] ) );
         }
+      }
+      else {
+        Factory::getLogger()->warning( 'Rgex in_href pattern not found.' );
       }
     }
     public function &getData() {
